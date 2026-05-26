@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Product & Order Management</title>
+    <style>
+        
+        * {
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+
+        
+        :root {
+            --bg-primary: #0b1320; 
+            --bg-secondary: #0f172a; 
+            --bg-tertiary: #111827; 
+            --bg-card: #111827; 
+            --bg-card-header: #0f172a; 
+            --bg-input: #17233b; 
+            --bg-hover: #1e293b; 
+
+            --text-primary: #e2e8f0; 
+            --text-secondary: #94a3b8; 
+            --text-muted: #cbd5e1; 
+            --text-inverse: #000000; 
+
+            --border-light: #273449; 
+            --border-medium: #334155; 
+            --border-dark: #475569; 
+
+            --btn-primary: #3b82f6; 
+            --btn-primary-hover: #1d4ed8; 
+            --btn-success: #22c55e; 
+            --btn-success-hover: #16a34a; 
+            --btn-danger: #ef4444; 
+            --btn-danger-hover: #b91c1c; 
+            --btn-warning: #f59e0b; 
+            --btn-warning-hover: #b45309; 
+            --btn-outline: #475569; 
+            --btn-outline-hover: #64748b; 
+
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35); 
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.35); 
+            --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.4); 
+
+            --radius-sm: 0.5rem; 
+            --radius-md: 0.75rem; 
+            --radius-lg: 1rem; 
+            --radius-xl: 1.25rem; 
+
+            --transition: all 0.18s ease; 
+        }
+
+        
+        body {
+            background: var(--bg-primary); 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            padding: 2rem; 
+            color: var(--text-primary); 
+            line-height: 1.6; 
+        }
+
+        
+        .admin-container {
+            max-width: 1440px; 
+            margin: 0 auto; 
+        }
+
+        
+        .header-card {
+            background: var(--bg-card); 
+            border-radius: var(--radius-xl); 
+            padding: 1.5rem 2rem; 
+            margin-bottom: 2rem; 
+            border: 1px solid var(--border-light); 
+            box-shadow: var(--shadow-sm); 
+        }
+
+        .header-card h1 {
+            font-size: 1.75rem; 
+            font-weight: 600; 
+            letter-spacing: -0.01em; 
+            color: var(--text-primary); 
+        }
+
+        .header-card p {
+            color: var(--text-muted); 
+            font-size: 0.875rem; 
+            margin-top: 0.25rem; 
+        }
+
+        
+        .card {
+            background: var(--bg-card); 
+            border-radius: var(--radius-xl); 
+            margin-bottom: 2rem; 
+            border: 1px solid var(--border-light); 
+            overflow: hidden; 
+            box-shadow: var(--shadow-sm); 
+        }
+
+        .card-header {
+            background: var(--bg-card-header); 
+            padding: 1rem 1.5rem; 
+            border-bottom: 1px solid var(--border-light); 
+        }
+
+        .card-header h2 {
+            font-size: 1.2rem; 
+            font-weight: 600; 
+            color: var(--text-primary); 
+        }
+
+        .card-body {
+            padding: 1.5rem; 
+        }
+
+        
+        .form-grid {
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 1.25rem; 
+            margin-bottom: 1.5rem; 
+        }
+
+        .form-field {
+            flex: 1; 
+            min-width: 180px; 
+        }
+
+        .form-field label {
+            display: block; 
+            font-size: 0.7rem; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 0.04em; 
+            color: var(--text-muted); 
+            margin-bottom: 0.4rem; 
+        }
+
+        .form-field input,
+        .form-field textarea {
+            width: 100%; 
+            padding: 0.6rem 0.75rem; 
+            border: 1px solid var(--border-light); 
+            border-radius: var(--radius-md); 
+            font-size: 0.875rem; 
+            transition: var(--transition); 
+            background: var(--bg-input); 
+            color: var(--text-primary); 
+        }
+
+        .form-field input:focus,
+        .form-field textarea:focus {
+            outline: none; 
+            border-color: var(--btn-primary); 
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); 
+        }
+
+        .form-field input::file-selector-button {
+            background: var(--bg-input); 
+            color: var(--text-primary); 
+            border: 1px solid var(--border-light); 
+            border-radius: var(--radius-sm); 
+            padding: 0.4rem 0.75rem; 
+            cursor: pointer; 
+            transition: var(--transition); 
+        }
+
+        .form-field input::file-selector-button:hover {
+            background: var(--bg-hover); 
+        }
+
+        
+        .btn {
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 0.5rem; 
+            padding: 0.6rem 1.2rem; 
+            border-radius: var(--radius-md); 
+            font-weight: 500; 
+            font-size: 0.875rem; 
+            border: none; 
+            cursor: pointer; 
+            transition: var(--transition); 
+            font-family: inherit; 
+        }
+
+        .btn-primary {
+            background: var(--btn-primary); 
+            color: white; 
+        }
+        .btn-primary:hover {
+            background: var(--btn-primary-hover); 
+        }
+
+        .btn-success {
+            background: var(--btn-success); 
+            color: white; 
+        }
+        .btn-success:hover {
+            background: var(--btn-success-hover); 
+        }
+
+        .btn-danger {
+            background: var(--btn-danger); 
+            color: white; 
+        }
+        .btn-danger:hover {
+            background: var(--btn-danger-hover); 
+        }
+
+        .btn-warning {
+            background: var(--btn-warning); 
+            color: var(--text-inverse); 
+        }
+        .btn-warning:hover {
+            background: var(--btn-warning-hover); 
+        }
+
+        .btn-outline {
+            background: transparent; 
+            border: 1px solid var(--border-light); 
+            color: var(--text-primary); 
+        }
+        .btn-outline:hover {
+            background: var(--bg-hover); 
+            border-color: var(--border-medium); 
+        }
+
+        
+        .btn-sm {
+            padding: 0.4rem 0.8rem; 
+            font-size: 0.75rem; 
+        }
+
+        
+        .action-bar {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            flex-wrap: wrap; 
+            gap: 1rem; 
+            margin-bottom: 1.5rem; 
+        }
+
+        .search-group {
+            display: flex; 
+            gap: 0.5rem; 
+            align-items: center; 
+            flex: 2; 
+            min-width: 260px; 
+        }
+
+        .search-group input {
+            flex: 1; 
+            padding: 0.5rem 0.75rem; 
+            border: 1px solid var(--border-light); 
+            border-radius: var(--radius-md); 
+            font-size: 0.875rem; 
+            background: var(--bg-input); 
+            color: var(--text-primary); 
+        }
+
+        .search-group input:focus {
+            outline: none; 
+            border-color: var(--btn-primary); 
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); 
+        }
+
+        .limit-group {
+            display: flex; 
+            align-items: center; 
+            gap: 0.5rem; 
+        }
+
+        .limit-group label {
+            font-size: 0.75rem; 
+            font-weight: 500; 
+            color: var(--text-muted); 
+        }
+
+        .limit-group select {
+            padding: 0.4rem 0.6rem; 
+            border-radius: var(--radius-sm); 
+            border: 1px solid var(--border-light); 
+            background: var(--bg-input); 
+            color: var(--text-primary); 
+            font-size: 0.8rem; 
+        }
+
+        .limit-group select:focus {
+            outline: none; 
+            border-color: var(--btn-primary); 
+        }
+
+        
+        .product-list {
+            display: flex; 
+            flex-direction: column; 
+            gap: 0.75rem; 
+        }
+
+        .product-item {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: var(--bg-input); 
+            border: 1px solid var(--border-light); 
+            border-radius: var(--radius-lg); 
+            padding: 0.85rem 1rem; 
+            transition: var(--transition); 
+        }
+
+        .product-item:hover {
+            border-color: var(--border-medium); 
+            background: var(--bg-hover); 
+        }
+
+        .product-info {
+            display: flex; 
+            align-items: center; 
+            gap: 1rem; 
+            flex-wrap: wrap; 
+        }
+
+        .product-thumb {
+            width: 48px; 
+            height: 48px; 
+            background: var(--bg-tertiary); 
+            border-radius: var(--radius-sm); 
+            object-fit: cover; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+
+        .product-thumb svg {
+            width: 24px; 
+            height: 24px; 
+            fill: var(--text-muted); 
+        }
+
+        .product-details .product-name {
+            font-weight: 600; 
+            color: var(--text-primary); 
+        }
+
+        .product-details .product-meta {
+            font-size: 0.75rem; 
+            color: var(--text-muted); 
+            margin-top: 0.2rem; 
+        }
+
+        .product-actions {
+            display: flex; 
+            gap: 0.5rem; 
+        }
+
+        
+        .data-table {
+            width: 100%; 
+            border-collapse: collapse; 
+            font-size: 0.875rem; 
+        }
+
+        .data-table th {
+            text-align: left; 
+            padding: 0.75rem 0.5rem; 
+            background: var(--bg-card-header); 
+            font-weight: 600; 
+            color: var(--text-secondary); 
+            border-bottom: 1px solid var(--border-light); 
+        }
+
+        .data-table td {
+            padding: 0.75rem 0.5rem; 
+            border-bottom: 1px solid var(--border-light); 
+            vertical-align: top; 
+            color: var(--text-primary); 
+        }
+
+        .data-table tr:hover td {
+            background: var(--bg-hover); 
+        }
+
+        .badge {
+            background: var(--bg-card-header); 
+            color: var(--text-secondary); 
+            padding: 0.2rem 0.5rem; 
+            border-radius: 999px; 
+            font-size: 0.7rem; 
+            font-weight: 500; 
+        }
+
+        
+        .modal {
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0, 0, 0, 0.7); 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 1000; 
+            backdrop-filter: blur(4px); 
+        }
+
+        .modal-content {
+            background: var(--bg-card); 
+            border-radius: var(--radius-xl); 
+            max-width: 820px; 
+            width: 90%; 
+            max-height: 85vh; 
+            overflow-y: auto; 
+            padding: 1.5rem; 
+            box-shadow: var(--shadow-lg); 
+            border: 1px solid var(--border-light); 
+        }
+
+        .modal-header {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 1rem; 
+            padding-bottom: 0.75rem; 
+            border-bottom: 1px solid var(--border-light); 
+        }
+
+        .modal-header h3 {
+            font-size: 1.25rem; 
+            font-weight: 600; 
+            color: var(--text-primary); 
+        }
+
+        .modal-close {
+            font-size: 1.5rem; 
+            line-height: 1; 
+            cursor: pointer; 
+            color: var(--text-muted); 
+            transition: color 0.2s; 
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary); 
+        }
+
+        
+        .attr-table {
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 1rem 0; 
+        }
+
+        .attr-table th,
+        .attr-table td {
+            border: 1px solid var(--border-light); 
+            padding: 0.6rem; 
+            text-align: left; 
+            vertical-align: middle; 
+            color: var(--text-primary); 
+        }
+
+        .attr-table th {
+            background: var(--bg-card-header); 
+            font-weight: 600; 
+            color: var(--text-secondary); 
+        }
+
+        .drag-handle {
+            cursor: grab; 
+            color: var(--text-muted); 
+            display: inline-block; 
+            font-size: 1.2rem; 
+            line-height: 1; 
+            user-select: none; 
+        }
+
+        .drag-handle:active {
+            cursor: grabbing; 
+        }
+
+        .selected-row {
+            background-color: var(--bg-card-header) !important; 
+        }
+
+        .sorting-controls {
+            display: flex; 
+            gap: 0.75rem; 
+            margin: 0.75rem 0 1rem 0; 
+            flex-wrap: wrap; 
+        }
+
+        .review-item {
+            background: var(--bg-card-header); 
+            border-left: 3px solid var(--btn-warning); 
+            padding: 0.75rem; 
+            margin-bottom: 0.75rem; 
+            border-radius: var(--radius-md); 
+        }
+
+        .empty-state {
+            text-align: center; 
+            padding: 2rem; 
+            color: var(--text-muted); 
+            font-size: 0.875rem; 
+        }
+
+        .results-info {
+            font-size: 0.75rem; 
+            color: var(--text-muted); 
+            margin-top: 1rem; 
+            text-align: right; 
+        }
+
+        
+        hr {
+            margin: 1rem 0; 
+            border: none; 
+            border-top: 1px solid var(--border-light); 
+        }
+
+        .form-actions {
+            display: flex; 
+            gap: 0.75rem; 
+            flex-wrap: wrap; 
+        }
+
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem; 
+            }
+
+            .header-card {
+                padding: 1rem; 
+            }
+
+            .card-body {
+                padding: 1rem; 
+            }
+
+            .form-grid {
+                gap: 1rem; 
+            }
+
+            .form-field {
+                min-width: 100%; 
+            }
+
+            .action-bar {
+                flex-direction: column; 
+                align-items: stretch; 
+            }
+
+            .search-group {
+                flex: 1; 
+            }
+
+            .product-item {
+                flex-direction: column; 
+                align-items: flex-start; 
+                gap: 0.75rem; 
+            }
+
+            .product-actions {
+                width: 100%; 
+                justify-content: flex-end; 
+            }
+
+            .modal-content {
+                padding: 1rem; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main admin dashboard wrapper -->
+    <div class="admin-container">
+        <!-- Page header and summary -->
+        <div class="header-card">
+            <h1>Admin Dashboard</h1> <!-- Page title -->
+            <p>Manage products, inventory, orders, and customer feedback from one place.</p> <!-- Description -->
+        </div>
+
+        <!-- Product Management Card (Add/Edit Product) -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Product Management</h2> <!-- Card title -->
+            </div>
+            <div class="card-body">
+                <!-- Product creation and edit form -->
+                <form id="productForm" enctype="multipart/form-data"> <!-- Form with file upload support -->
+                    <input type="hidden" id="productId"> <!-- Hidden field for product ID (edit mode) -->
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label>Product Name</label> <!-- Label -->
+                            <input type="text" id="prodName" required> <!-- Text input, required -->
+                        </div>
+                        <div class="form-field">
+                            <label>Price (USD)</label> <!-- Label -->
+                            <input type="number" id="prodPrice" step="0.01" required> <!-- Number input with decimals -->
+                        </div>
+                        <div class="form-field">
+                            <label>Stock</label> <!-- Label -->
+                            <input type="number" id="prodStock" required> <!-- Number input for stock -->
+                        </div>
+                        <div class="form-field">
+                            <label>Category</label> <!-- Label -->
+                            <input type="text" id="prodCategory"> <!-- Optional category -->
+                        </div>
+                        <div class="form-field">
+                            <label>Product Image</label> <!-- Label -->
+                            <input type="file" id="prodImage" accept="image/*"> <!-- File picker (images only) -->
+                        </div>
+                    </div>
+                    <!-- Current image preview (shown when editing an existing product) -->
+                    <div id="currentImageContainer" style="display:none; margin-bottom:1rem;">
+                        <label>Current Image:</label><br> <!-- Label -->
+                        <img id="currentImagePreview" style="max-width:80px; border-radius:8px; margin-top:6px; background:var(--bg-tertiary);"> <!-- Image preview -->
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">Save Product</button> <!-- Submit button -->
+                        <button type="button" id="clearFormBtn" class="btn btn-outline">Clear Form</button> <!-- Clear button -->
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Product Catalog Card (list of products with search/pagination) -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Product Catalog</h2> <!-- Card title -->
+            </div>
+            <div class="card-body">
+                <!-- Product catalog search and filter controls -->
+                <div class="action-bar">
+                    <div class="search-group">
+                        <input type="text" id="productSearch" placeholder="Search by name or category..."> <!-- Search input -->
+                        <button id="searchProductsBtn" class="btn btn-primary btn-sm">Search</button> <!-- Search button -->
+                        <button id="resetProductsBtn" class="btn btn-outline btn-sm">Reset</button> <!-- Reset button -->
+                    </div>
+                    <div class="limit-group">
+                        <label>Show</label> <!-- Label -->
+                        <select id="productLimit"> <!-- Limit dropdown -->
+                            <option value="5">5</option> <!-- 5 per page -->
+                            <option value="10" selected>10</option> <!-- 10 per page (default) -->
+                            <option value="25">25</option> <!-- 25 per page -->
+                            <option value="50">50</option> <!-- 50 per page -->
+                            <option value="999999">All</option> <!-- Show all -->
+                        </select>
+                    </div>
+                </div>
+                <div id="adminProductList" class="product-list"></div> <!-- Dynamic product list -->
+                <div id="productResultsInfo" class="results-info"></div> <!-- Results count info -->
+            </div>
+        </div>
+
+        <!-- Customer Orders Card (orders list with search/pagination) -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Customer Orders</h2> <!-- Card title -->
+            </div>
+            <div class="card-body">
+                <!-- Order search and limit selector -->
+                <div class="action-bar">
+                    <div class="search-group">
+                        <input type="text" id="orderSearch" placeholder="Search by customer, email or product..."> <!-- Search input -->
+                        <button id="searchOrdersBtn" class="btn btn-primary btn-sm">Search</button> <!-- Search button -->
+                        <button id="resetOrdersBtn" class="btn btn-outline btn-sm">Reset</button> <!-- Reset button -->
+                    </div>
+                    <div class="limit-group">
+                        <label>Show</label> <!-- Label -->
+                        <select id="orderLimit"> <!-- Limit dropdown -->
+                            <option value="5">5</option> <!-- 5 per page -->
+                            <option value="10" selected>10</option> <!-- 10 per page (default) -->
+                            <option value="25">25</option> <!-- 25 per page -->
+                            <option value="50">50</option> <!-- 50 per page -->
+                            <option value="999999">All</option> <!-- Show all -->
+                        </select>
+                    </div>
+                </div>
+                <div id="ordersList"></div> <!-- Dynamic orders table -->
+                <div id="orderResultsInfo" class="results-info"></div> <!-- Results count info -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for product details (attributes & reviews) -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="detailProductName">Manage Product</h3> <!-- Dynamic product name -->
+                <span class="modal-close">&times;</span> <!-- Close button -->
+            </div>
+            <div id="detailContent"></div> <!-- Dynamic content (attributes, reviews, forms) -->
+        </div>
+    </div>
+
+    <script>
+        /* ---------- JAVASCRIPT ---------- */
+        /* API base URL and application state */
+        const API = 'http://localhost:5000'; // Backend API endpoint
+        let allProducts = [];                // Complete product list from database
+        let allOrders = [];                  // Complete orders list from database
+        let currentAttributeOrder = [];      // Custom order of attribute keys (for reordering)
+        let productSearchTerm = '';          // Current product search text
+        let productCurrentLimit = 10;        // Number of products to show per page
+        let orderSearchTerm = '';            // Current order search text
+        let orderCurrentLimit = 10;          // Number of orders to show per page
+
+        /* ---------- UTILITY HELPERS ---------- */
+        // Escape special HTML characters to prevent XSS attacks
+        function escapeHtml(str) {
+            if (!str) return ''; // Return empty string if null/undefined
+            return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]); // Replace &, <, >
+        }
+
+        /* ---------- PRODUCT DATA & LISTS ---------- */
+        // Fetch all products from backend
+        async function loadProducts() {
+            const res = await fetch(`${API}/api/products`); // GET request
+            allProducts = await res.json();                 // Parse JSON
+            filterAndRenderProducts();                       // Apply filters and render
+        }
+
+        // Apply search filter and pagination limit to products
+        function filterAndRenderProducts() {
+            // Start with copy of all products
+            let filtered = [...allProducts];
+            // If there is a search term, filter by name or category
+            if (productSearchTerm) {
+                const term = productSearchTerm.toLowerCase();
+                filtered = filtered.filter(p => p.name.toLowerCase().includes(term) || (p.category && p.category.toLowerCase().includes(term)));
+            }
+            // Apply limit: if limit is 999999, show all; otherwise take first N
+            const display = productCurrentLimit === 999999 ? filtered : filtered.slice(0, productCurrentLimit);
+            // Render the product list
+            renderProductList(display, filtered.length);
+        }
+
+        // Render product list in DOM
+        function renderProductList(productsToShow, totalCount) {
+            const container = document.getElementById('adminProductList'); // Get container
+            if (!productsToShow.length) {
+                // Show empty state if no products
+                container.innerHTML = '<div class="empty-state">No products found</div>';
+                document.getElementById('productResultsInfo').innerHTML = '';
+                return;
+            }
+            container.innerHTML = ''; // Clear container
+            // Loop through each product
+            productsToShow.forEach(p => {
+                const div = document.createElement('div'); // Create product item div
+                div.className = 'product-item'; // Set class
+                // Generate thumbnail HTML (image or placeholder icon)
+                const thumbHtml = p.image_url
+                    ? `<img src="${API}${escapeHtml(p.image_url)}" class="product-thumb" onerror="this.style.display='none'">`
+                    : `<svg class="product-thumb" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>`;
+                // Build inner HTML
+                div.innerHTML = `
+                    <div class="product-info">
+                        ${thumbHtml}
+                        <div class="product-details">
+                            <div class="product-name">${escapeHtml(p.name)}</div>
+                            <div class="product-meta">$${p.price} | Stock: ${p.stock} | Category: ${escapeHtml(p.category || 'Uncategorized')}</div>
+                        </div>
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn btn-warning btn-sm manage" data-id="${p.id}">Manage</button>
+                        <button class="btn btn-primary btn-sm edit" data-id="${p.id}">Edit</button>
+                        <button class="btn btn-danger btn-sm delete" data-id="${p.id}">Delete</button>
+                    </div>
+                `;
+                // Attach event listeners
+                div.querySelector('.manage').addEventListener('click', () => openDetailModal(p.id));
+                div.querySelector('.edit').addEventListener('click', () => fillEditForm(p));
+                div.querySelector('.delete').addEventListener('click', async () => {
+                    if (confirm(`Delete "${p.name}" permanently? This also removes its attributes and reviews.`)) {
+                        await fetch(`${API}/api/products/${p.id}`, { method: 'DELETE' }); // DELETE request
+                        loadProducts(); // Refresh product list
+                    }
+                });
+                container.appendChild(div); // Append to container
+            });
+            // Update results info text
+            document.getElementById('productResultsInfo').innerHTML = `Showing ${productsToShow.length} of ${totalCount} products`;
+        }
+
+        /* ---------- ORDER DATA & LISTS ---------- */
+        // Fetch all orders from backend
+        async function loadOrders() {
+            const res = await fetch(`${API}/api/orders`); // GET request
+            allOrders = await res.json();                 // Parse JSON
+            filterAndRenderOrders();                       // Apply filters and render
+        }
+
+        // Apply search filter and pagination limit to orders
+        function filterAndRenderOrders() {
+            let filtered = [...allOrders];
+            if (orderSearchTerm) {
+                const term = orderSearchTerm.toLowerCase();
+                // Filter by customer name, email, or product summary
+                filtered = filtered.filter(o =>
+                    o.customer_name.toLowerCase().includes(term) ||
+                    (o.customer_email && o.customer_email.toLowerCase().includes(term)) ||
+                    (o.items_summary && o.items_summary.toLowerCase().includes(term))
+                );
+            }
+            // Sort orders by date (oldest first)
+            filtered.sort((a, b) => new Date(a.order_date) - new Date(b.order_date));
+            const display = orderCurrentLimit === 999999 ? filtered : filtered.slice(0, orderCurrentLimit);
+            renderOrdersTable(display, filtered.length);
+        }
+
+        // Render orders table in DOM
+        function renderOrdersTable(ordersToShow, totalCount) {
+            const container = document.getElementById('ordersList');
+            if (!ordersToShow.length) {
+                container.innerHTML = '<div class="empty-state">No orders found</div>';
+                document.getElementById('orderResultsInfo').innerHTML = '';
+                return;
+            }
+            // Build HTML table
+            let html = `<table class="data-table">
+                <thead>
+                    <tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Order Date</th><th>Delivery Date</th></tr>
+                </thead>
+                <tbody>`;
+            ordersToShow.forEach(o => {
+                let itemsList = '';
+                if (o.items && o.items.length) {
+                    itemsList = o.items.map(i => `${escapeHtml(i.product_name)} (x${i.quantity})`).join('<br>');
+                } else {
+                    itemsList = o.items_summary || '-';
+                }
+                html += `<tr>
+                    <td>${o.id}</td> <!-- Order ID -->
+                    <td><strong>${escapeHtml(o.customer_name)}</strong><br><span class="badge">${escapeHtml(o.customer_email || '')}</span></td> <!-- Customer -->
+                    <td>${itemsList}</td> <!-- Items -->
+                    <td>$${parseFloat(o.total_amount).toFixed(2)}</td> <!-- Total amount -->
+                    <td>${new Date(o.order_date).toLocaleDateString()}</td> <!-- Order date -->
+                    <td>${new Date(o.delivery_date).toLocaleDateString()}</td> <!-- Delivery date -->
+                </tr>`;
+            });
+            html += `</tbody></table>`;
+            container.innerHTML = html; // Insert HTML
+            document.getElementById('orderResultsInfo').innerHTML = `Showing ${ordersToShow.length} of ${totalCount} orders`;
+        }
+
+        /* ---------- EDIT PRODUCT FORM ---------- */
+        // Pre‑populate the product form with existing product data (for editing)
+        function fillEditForm(product) {
+            document.getElementById('productId').value = product.id; // Set hidden ID
+            document.getElementById('prodName').value = product.name; // Product name
+            document.getElementById('prodPrice').value = product.price; // Price
+            document.getElementById('prodStock').value = product.stock; // Stock
+            document.getElementById('prodCategory').value = product.category || ''; // Category
+            document.getElementById('prodImage').value = ''; // Clear file input
+            // Show current image preview if exists
+            if (product.image_url) {
+                document.getElementById('currentImageContainer').style.display = 'block';
+                document.getElementById('currentImagePreview').src = API + product.image_url;
+            } else {
+                document.getElementById('currentImageContainer').style.display = 'none';
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
+        }
+
+        // Handle product form submission (create or update)
+        document.getElementById('productForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); // Prevent page reload
+            const id = document.getElementById('productId').value; // Product ID (empty for new)
+            const name = document.getElementById('prodName').value.trim();
+            const price = parseFloat(document.getElementById('prodPrice').value);
+            const stock = parseInt(document.getElementById('prodStock').value);
+            const category = document.getElementById('prodCategory').value.trim();
+            const imageFile = document.getElementById('prodImage').files[0];
+
+            if (!name || isNaN(price) || isNaN(stock)) return alert('Name, price and stock are required');
+
+            const formData = new FormData(); // Create FormData object for multipart upload
+            formData.append('name', name);
+            formData.append('price', price);
+            formData.append('stock', stock);
+            formData.append('category', category);
+            if (imageFile) formData.append('image', imageFile); // Add image if provided
+
+            const url = id ? `${API}/api/products/${id}` : `${API}/api/products`; // Endpoint
+            const method = id ? 'PUT' : 'POST'; // PUT for update, POST for create
+
+            const resp = await fetch(url, { method, body: formData }); // Send request
+            if (resp.ok) {
+                // Reset form after successful save
+                document.getElementById('productForm').reset();
+                document.getElementById('productId').value = '';
+                document.getElementById('currentImageContainer').style.display = 'none';
+                loadProducts(); // Refresh product list
+            } else {
+                const err = await resp.json();
+                alert('Error: ' + err.error);
+            }
+        });
+
+        // Clear form button: reset fields and remove edit state
+        document.getElementById('clearFormBtn').addEventListener('click', () => {
+            document.getElementById('productForm').reset();
+            document.getElementById('productId').value = '';
+            document.getElementById('currentImageContainer').style.display = 'none';
+        });
+
+        // Product search & limit event listeners
+        document.getElementById('searchProductsBtn').onclick = () => {
+            productSearchTerm = document.getElementById('productSearch').value.trim(); // Read search term
+            filterAndRenderProducts(); // Re‑filter and render
+        };
+        document.getElementById('resetProductsBtn').onclick = () => {
+            document.getElementById('productSearch').value = ''; // Clear input
+            productSearchTerm = ''; // Clear search term
+            filterAndRenderProducts(); // Show all
+        };
+        document.getElementById('productLimit').onchange = (e) => {
+            productCurrentLimit = parseInt(e.target.value); // Update limit
+            filterAndRenderProducts(); // Re‑render
+        };
+        document.getElementById('productSearch').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                productSearchTerm = document.getElementById('productSearch').value.trim();
+                filterAndRenderProducts();
+            }
+        });
+
+        // Order search & limit event listeners
+        document.getElementById('searchOrdersBtn').onclick = () => {
+            orderSearchTerm = document.getElementById('orderSearch').value.trim();
+            filterAndRenderOrders();
+        };
+        document.getElementById('resetOrdersBtn').onclick = () => {
+            document.getElementById('orderSearch').value = '';
+            orderSearchTerm = '';
+            filterAndRenderOrders();
+        };
+        document.getElementById('orderLimit').onchange = (e) => {
+            orderCurrentLimit = parseInt(e.target.value);
+            filterAndRenderOrders();
+        };
+        document.getElementById('orderSearch').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                orderSearchTerm = document.getElementById('orderSearch').value.trim();
+                filterAndRenderOrders();
+            }
+        });
+
+        /* ---------- MODAL LOGIC (Attributes & Reviews) ---------- */
+        async function openDetailModal(productId) {
+            const product = allProducts.find(p => p.id == productId); // Find product
+            if (!product) return;
+            document.getElementById('detailProductName').innerText = `Manage: ${product.name}`; // Set modal title
+
+            // Fetch attributes and reviews
+            const attrRes = await fetch(`${API}/api/attributes/${productId}`);
+            let attributes = await attrRes.json();
+            const revRes = await fetch(`${API}/api/reviews/${productId}`);
+            let reviews = await revRes.json();
+
+            const EXCLUDED = ['_id', 'product_id', 'updated_at']; // MongoDB internal fields to exclude
+            let attrKeys = Object.keys(attributes).filter(k => !EXCLUDED.includes(k));
+            if (!currentAttributeOrder.length) currentAttributeOrder = [...attrKeys];
+
+            // Build attributes table HTML
+            let attrHtml = `<h4 style="margin-bottom:0.5rem;">Custom Attributes</h4>`;
+            if (attrKeys.length === 0) {
+                attrHtml += `<div class="empty-state">No attributes yet. Add one below.</div>`;
+            } else {
+                attrHtml += `<table class="attr-table" id="attrTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px"></th>
+                            <th>Attribute</th>
+                            <th>Value</th>
+                            <th style="width: 80px">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attrTableBody">`;
+                currentAttributeOrder.forEach(key => {
+                    if (!attributes[key]) return;
+                    attrHtml += `<tr data-key="${escapeHtml(key)}">
+                        <td style="text-align: center; cursor: grab;"><span class="drag-handle">::</span></td> <!-- Drag handle -->
+                        <td><strong>${escapeHtml(key)}</strong></td> <!-- Attribute key -->
+                        <td>${escapeHtml(attributes[key])}</td> <!-- Attribute value -->
+                        <td><button class="btn btn-danger btn-sm delete-attr" data-key="${escapeHtml(key)}">Delete</button></td> <!-- Delete button -->
+                    </tr>`;
+                });
+                attrHtml += `</tbody>
+                </table>
+                <div class="sorting-controls">
+                    <button id="moveUpBtn" class="btn btn-outline btn-sm">Move Up</button> <!-- Move up button -->
+                    <button id="moveDownBtn" class="btn btn-outline btn-sm">Move Down</button> <!-- Move down button -->
+                    <span style="font-size:0.7rem; color:var(--text-muted); margin-left:auto;">Click a row to select, then use Move Up/Down</span> <!-- Helper text -->
+                </div>`;
+            }
+            // Add new attribute form
+            attrHtml += `<div style="margin-top: 0.75rem;">
+                <label>Add new attribute</label>
+                <div style="display:flex; gap:0.5rem; margin-top:0.25rem;">
+                    <input type="text" id="newAttrKey" placeholder="Attribute name" style="flex:1"> <!-- Key input -->
+                    <input type="text" id="newAttrVal" placeholder="Value" style="flex:1"> <!-- Value input -->
+                    <button id="addAttrBtn" class="btn btn-success btn-sm">Add</button> <!-- Add button -->
+                </div>
+            </div><hr>`;
+
+            // Build reviews list HTML
+            let reviewsHtml = `<h4>Customer Reviews</h4>`;
+            if (reviews.length === 0) {
+                reviewsHtml += `<div class="empty-state">No reviews yet.</div>`;
+            } else {
+                reviews.forEach(r => {
+                    reviewsHtml += `<div class="review-item">
+                        <div><strong>${escapeHtml(r.user)}</strong> Rating: ${r.rating}/5</div> <!-- Reviewer name and rating -->
+                        <div style="margin:0.25rem 0">${escapeHtml(r.comment)}</div> <!-- Review text -->
+                        <div style="font-size:0.7rem;">${new Date(r.created_at).toLocaleString()}</div> <!-- Date -->
+                        <button class="btn btn-danger btn-sm delReview" data-id="${r._id}" style="margin-top:0.25rem;">Delete review</button> <!-- Delete button -->
+                    </div>`;
+                });
+            }
+            // Add new review form
+            reviewsHtml += `<div style="margin-top: 1rem;">
+                <label>Add customer review</label>
+                <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.5rem;">
+                    <input type="text" id="reviewName" placeholder="Customer name" style="flex:1"> <!-- Name -->
+                    <input type="number" id="reviewRating" placeholder="Rating 1-5" style="width:100px"> <!-- Rating -->
+                    <input type="text" id="reviewComment" placeholder="Comment" style="flex:2"> <!-- Comment -->
+                    <button id="addReviewBtn" class="btn btn-primary btn-sm">Add</button> <!-- Add button -->
+                </div>
+            </div>`;
+
+            document.getElementById('detailContent').innerHTML = attrHtml + reviewsHtml; // Insert into modal
+
+            // --- Attribute handlers ---
+            document.getElementById('addAttrBtn').onclick = async () => {
+                const key = document.getElementById('newAttrKey').value.trim();
+                const val = document.getElementById('newAttrVal').value.trim();
+                if (!key || !val) return alert('Both fields required');
+                await fetch(`${API}/api/attributes`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ product_id: productId, attributes: { [key]: val } })
+                });
+                currentAttributeOrder = []; // Reset order cache
+                openDetailModal(productId); // Refresh modal
+                loadProducts(); // Refresh product list
+            };
+            // Delete attribute handler
+            document.querySelectorAll('.delete-attr').forEach(btn => {
+                btn.onclick = async () => {
+                    const key = btn.getAttribute('data-key');
+                    if (!confirm(`Delete attribute "${key}"?`)) return;
+                    const cur = await fetch(`${API}/api/attributes/${productId}`);
+                    let curAttrs = await cur.json();
+                    delete curAttrs[key]; // Remove key
+                    await fetch(`${API}/api/attributes`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ product_id: productId, attributes: curAttrs })
+                    });
+                    currentAttributeOrder = currentAttributeOrder.filter(k => k !== key);
+                    openDetailModal(productId);
+                    loadProducts();
+                };
+            });
+            // Add review handler
+            document.getElementById('addReviewBtn').onclick = async () => {
+                const user = document.getElementById('reviewName').value.trim() || 'Anonymous';
+                const rating = parseInt(document.getElementById('reviewRating').value);
+                const comment = document.getElementById('reviewComment').value;
+                if (isNaN(rating) || rating < 1 || rating > 5) return alert('Rating must be 1-5');
+                await fetch(`${API}/api/reviews`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ product_id: productId, rating, comment, user })
+                });
+                openDetailModal(productId);
+            };
+            // Delete review handler
+            document.querySelectorAll('.delReview').forEach(btn => {
+                btn.onclick = async () => {
+                    const revId = btn.getAttribute('data-id');
+                    await fetch(`${API}/api/reviews/${revId}`, { method: 'DELETE' });
+                    openDetailModal(productId);
+                };
+            });
+
+            // --- Attribute sorting (Move Up/Down) ---
+            const tableBody = document.getElementById('attrTableBody');
+            let selectedRowIndex = -1;
+            if (tableBody) {
+                const rows = tableBody.querySelectorAll('tr');
+                rows.forEach((row, idx) => {
+                    row.style.cursor = 'pointer';
+                    row.onclick = () => {
+                        rows.forEach(r => r.classList.remove('selected-row'));
+                        row.classList.add('selected-row'); // Highlight selected row
+                        selectedRowIndex = idx;
+                    };
+                });
+                const moveUp = document.getElementById('moveUpBtn');
+                const moveDown = document.getElementById('moveDownBtn');
+                if (moveUp) moveUp.onclick = () => {
+                    if (selectedRowIndex > 0) {
+                        // Swap positions in currentAttributeOrder array
+                        [currentAttributeOrder[selectedRowIndex], currentAttributeOrder[selectedRowIndex-1]] =
+                        [currentAttributeOrder[selectedRowIndex-1], currentAttributeOrder[selectedRowIndex]];
+                        openDetailModal(productId); // Refresh with new order
+                    } else {
+                        alert('Select an attribute first or it is already at the top');
+                    }
+                };
+                if (moveDown) moveDown.onclick = () => {
+                    if (selectedRowIndex < currentAttributeOrder.length-1 && selectedRowIndex >= 0) {
+                        [currentAttributeOrder[selectedRowIndex], currentAttributeOrder[selectedRowIndex+1]] =
+                        [currentAttributeOrder[selectedRowIndex+1], currentAttributeOrder[selectedRowIndex]];
+                        openDetailModal(productId);
+                    } else {
+                        alert('Select an attribute first or it is already at the bottom');
+                    }
+                };
+            }
+
+            document.getElementById('detailModal').style.display = 'flex'; // Show modal
+        }
+
+        // Close modal (× button or click outside)
+        document.querySelector('.modal-close').onclick = () => {
+            document.getElementById('detailModal').style.display = 'none';
+            currentAttributeOrder = []; // Reset attribute order
+        };
+        window.onclick = (e) => {
+            if (e.target === document.getElementById('detailModal')) {
+                document.getElementById('detailModal').style.display = 'none';
+                currentAttributeOrder = [];
+            }
+        };
+
+        // Initial load: fetch products and orders
+        loadProducts();
+        loadOrders();
+    </script>
+</body>
+</html>
