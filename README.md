@@ -25,20 +25,21 @@ If you received this project as a ZIP file:
 3. Install dependencies:
    npm install
 4. Create a .env file inside backend/ with the following content (adjust passwords/credentials as needed):
-   PORT=5000
-   MYSQL_HOST=localhost
-   MYSQL_USER=root
-   MYSQL_PASSWORD=your_mysql_password
-   MYSQL_DATABASE=ecommerce
-   MONGODB_URI=mongodb://localhost:27017
-   MONGODB_DB=ecommerce_catalog
-   JWT_SECRET=your_super_secret_key_change_this
-5. Set up MySQL – run the SQL script below (or use the provided database.sql file) to create the database and tables.
-6. Start MongoDB – run mongod in a separate terminal (or start it as a service).
-7. Start the backend:
+   |PORT=5000|
+   |---------|
+   |MYSQL_HOST=localhost|
+   |MYSQL_USER=root|
+   |MYSQL_PASSWORD=your_mysql_password|
+   |MYSQL_DATABASE=ecommerce|
+   |MONGODB_URI=mongodb://localhost:27017|
+   |MONGODB_DB=ecommerce_catalog|
+   |JWT_SECRET=your_super_secret_key_change_this|
+6. Set up MySQL – run the SQL script below (or use the provided database.sql file) to create the database and tables.
+7. Start MongoDB – run mongod in a separate terminal (or start it as a service).
+8. Start the backend:
    npm start
    You should see "Server running on http://localhost:5000".
-8. Open the frontend in your browser (double-click or open via file menu):
+9. Open the frontend in your browser (double-click or open via file menu):
    - Admin dashboard – frontend/admin-dashboard.html
    - Customer store – frontend/store.html
 
