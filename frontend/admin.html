@@ -3,1153 +3,1147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Product & Order Management</title>
+    <title>TechVault — Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
     <style>
-        
-        * {
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-        }
-
-        
+        /* --- all CSS exactly as in your file, unchanged --- */
         :root {
-            --bg-primary: #0b1320; 
-            --bg-secondary: #0f172a; 
-            --bg-tertiary: #111827; 
-            --bg-card: #111827; 
-            --bg-card-header: #0f172a; 
-            --bg-input: #17233b; 
-            --bg-hover: #1e293b; 
-
-            --text-primary: #e2e8f0; 
-            --text-secondary: #94a3b8; 
-            --text-muted: #cbd5e1; 
-            --text-inverse: #000000; 
-
-            --border-light: #273449; 
-            --border-medium: #334155; 
-            --border-dark: #475569; 
-
-            --btn-primary: #3b82f6; 
-            --btn-primary-hover: #1d4ed8; 
-            --btn-success: #22c55e; 
-            --btn-success-hover: #16a34a; 
-            --btn-danger: #ef4444; 
-            --btn-danger-hover: #b91c1c; 
-            --btn-warning: #f59e0b; 
-            --btn-warning-hover: #b45309; 
-            --btn-outline: #475569; 
-            --btn-outline-hover: #64748b; 
-
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35); 
-            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.35); 
-            --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.4); 
-
-            --radius-sm: 0.5rem; 
-            --radius-md: 0.75rem; 
-            --radius-lg: 1rem; 
-            --radius-xl: 1.25rem; 
-
-            --transition: all 0.18s ease; 
+            --ink:        #0f0e0d;
+            --cream:      #faf8f4;
+            --warm:       #f2ede6;
+            --warm2:      #e8e0d5;
+            --mid:        #c9c2b8;
+            --muted:      #8a8078;
+            --white:      #ffffff;
+            --accent:     #c8472b;
+            --accent-dk:  #a33520;
+            --accent-lt:  #f5e8e5;
+            --blue:       #3b6fd4;
+            --blue-lt:    #eef2fb;
+            --green:      #2d7a4f;
+            --green-lt:   #eaf4ee;
+            --amber:      #b8893a;
+            --amber-lt:   #faf3e6;
+            --red:        #c8472b;
+            --red-lt:     #f5e8e5;
+            --shadow-sm:  0 1px 3px rgba(15,14,13,.06), 0 1px 2px rgba(15,14,13,.04);
+            --shadow-md:  0 4px 16px rgba(15,14,13,.09), 0 2px 6px rgba(15,14,13,.05);
+            --shadow-lg:  0 20px 48px rgba(15,14,13,.13), 0 8px 20px rgba(15,14,13,.07);
+            --r-sm:  6px;
+            --r-md:  12px;
+            --r-lg:  18px;
+            --r-xl:  100px;
+            --ease:  cubic-bezier(.4,0,.2,1);
         }
 
-        
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
         body {
-            background: var(--bg-primary); 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            padding: 2rem; 
-            color: var(--text-primary); 
-            line-height: 1.6; 
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--ink);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: var(--warm); }
+        ::-webkit-scrollbar-thumb { background: var(--warm2); border-radius: 10px; }
+
+        /* ── TOP NAV ───────────────────────── */
+        .topnav {
+            background: var(--ink);
+            position: sticky; top: 0; z-index: 900;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .topnav-inner {
+            max-width: 1440px; margin: 0 auto;
+            padding: 0 32px; height: 60px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px; font-weight: 900;
+            color: var(--white); letter-spacing: -.5px;
+            text-decoration: none;
+        }
+        .brand span { color: var(--accent); }
+        .nav-tag {
+            font-size: 11px; font-weight: 600; letter-spacing: 2px;
+            text-transform: uppercase; color: rgba(255,255,255,.35);
         }
 
-        
-        .admin-container {
-            max-width: 1440px; 
-            margin: 0 auto; 
+        /* ── LAYOUT ────────────────────────── */
+        .admin-wrap {
+            max-width: 1440px; margin: 0 auto;
+            padding: 32px 32px 64px;
         }
 
-        
-        .header-card {
-            background: var(--bg-card); 
-            border-radius: var(--radius-xl); 
-            padding: 1.5rem 2rem; 
-            margin-bottom: 2rem; 
-            border: 1px solid var(--border-light); 
-            box-shadow: var(--shadow-sm); 
+        /* ── PAGE HEADER ───────────────────── */
+        .page-header {
+            margin-bottom: 28px;
+        }
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 30px; font-weight: 900;
+            color: var(--ink); letter-spacing: -.5px;
+            line-height: 1.1;
+        }
+        .page-header p {
+            font-size: 14px; color: var(--muted);
+            margin-top: 4px; font-weight: 400;
         }
 
-        .header-card h1 {
-            font-size: 1.75rem; 
-            font-weight: 600; 
-            letter-spacing: -0.01em; 
-            color: var(--text-primary); 
+        /* ── TABS ──────────────────────────── */
+        .tabs {
+            display: flex; gap: 0;
+            border-bottom: 1.5px solid var(--warm2);
+            margin-bottom: 28px;
         }
-
-        .header-card p {
-            color: var(--text-muted); 
-            font-size: 0.875rem; 
-            margin-top: 0.25rem; 
+        .tab-btn {
+            background: transparent; border: none;
+            padding: 12px 22px; cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px; font-weight: 600;
+            color: var(--muted);
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1.5px;
+            transition: color .2s var(--ease), border-color .2s var(--ease);
+            white-space: nowrap;
         }
+        .tab-btn:hover { color: var(--ink); }
+        .tab-btn.active {
+            color: var(--ink);
+            border-bottom-color: var(--ink);
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
 
-        
+        /* ── CARD ──────────────────────────── */
         .card {
-            background: var(--bg-card); 
-            border-radius: var(--radius-xl); 
-            margin-bottom: 2rem; 
-            border: 1px solid var(--border-light); 
-            overflow: hidden; 
-            box-shadow: var(--shadow-sm); 
+            background: var(--white);
+            border: 1px solid rgba(201,194,184,.4);
+            border-radius: var(--r-lg);
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
         }
-
         .card-header {
-            background: var(--bg-card-header); 
-            padding: 1rem 1.5rem; 
-            border-bottom: 1px solid var(--border-light); 
+            padding: 16px 24px;
+            border-bottom: 1px solid rgba(201,194,184,.35);
+            display: flex; align-items: center; justify-content: space-between;
+            background: var(--warm);
         }
-
         .card-header h2 {
-            font-size: 1.2rem; 
-            font-weight: 600; 
-            color: var(--text-primary); 
+            font-family: 'Playfair Display', serif;
+            font-size: 17px; font-weight: 700; color: var(--ink);
         }
+        .card-body { padding: 24px; }
 
-        .card-body {
-            padding: 1.5rem; 
-        }
-
-        
+        /* ── FORM ──────────────────────────── */
         .form-grid {
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 1.25rem; 
-            margin-bottom: 1.5rem; 
+            display: flex; flex-wrap: wrap;
+            gap: 16px; margin-bottom: 20px;
         }
-
-        .form-field {
-            flex: 1; 
-            min-width: 180px; 
-        }
-
+        .form-field { flex: 1; min-width: 180px; }
         .form-field label {
-            display: block; 
-            font-size: 0.7rem; 
-            font-weight: 600; 
-            text-transform: uppercase; 
-            letter-spacing: 0.04em; 
-            color: var(--text-muted); 
-            margin-bottom: 0.4rem; 
+            display: block; font-size: 11px;
+            font-weight: 700; letter-spacing: 1.2px;
+            text-transform: uppercase; color: var(--muted);
+            margin-bottom: 6px;
         }
-
         .form-field input,
-        .form-field textarea {
-            width: 100%; 
-            padding: 0.6rem 0.75rem; 
-            border: 1px solid var(--border-light); 
-            border-radius: var(--radius-md); 
-            font-size: 0.875rem; 
-            transition: var(--transition); 
-            background: var(--bg-input); 
-            color: var(--text-primary); 
+        .form-field textarea,
+        .form-field select {
+            width: 100%; padding: 10px 13px;
+            border: 1.5px solid var(--warm2);
+            border-radius: var(--r-md);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px; color: var(--ink);
+            background: var(--warm);
+            outline: none;
+            transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
         }
-
         .form-field input:focus,
-        .form-field textarea:focus {
-            outline: none; 
-            border-color: var(--btn-primary); 
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); 
+        .form-field textarea:focus,
+        .form-field select:focus {
+            border-color: var(--ink);
+            box-shadow: 0 0 0 3px rgba(15,14,13,.06);
+            background: var(--white);
         }
-
+        .form-field input::placeholder,
+        .form-field textarea::placeholder { color: var(--mid); }
         .form-field input::file-selector-button {
-            background: var(--bg-input); 
-            color: var(--text-primary); 
-            border: 1px solid var(--border-light); 
-            border-radius: var(--radius-sm); 
-            padding: 0.4rem 0.75rem; 
-            cursor: pointer; 
-            transition: var(--transition); 
+            background: var(--warm2); color: var(--ink);
+            border: 1px solid var(--mid); border-radius: var(--r-sm);
+            padding: 5px 12px; cursor: pointer; font-family: 'DM Sans', sans-serif;
+            font-size: 13px; font-weight: 500;
+            transition: background .15s var(--ease);
         }
+        .form-field input::file-selector-button:hover { background: var(--warm2); filter: brightness(.95); }
 
-        .form-field input::file-selector-button:hover {
-            background: var(--bg-hover); 
+        .img-preview-wrap {
+            display: none; margin-bottom: 16px; align-items: center; gap: 12px;
         }
+        .img-preview-wrap label { font-size: 12px; font-weight: 600; color: var(--muted); }
+        .img-preview-wrap img {
+            width: 72px; height: 72px; object-fit: cover;
+            border-radius: var(--r-md);
+            border: 1.5px solid var(--warm2);
+        }
+        .form-actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
-        
+        /* ── BUTTONS ───────────────────────── */
         .btn {
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 0.5rem; 
-            padding: 0.6rem 1.2rem; 
-            border-radius: var(--radius-md); 
-            font-weight: 500; 
-            font-size: 0.875rem; 
-            border: none; 
-            cursor: pointer; 
-            transition: var(--transition); 
-            font-family: inherit; 
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: 6px; padding: 9px 18px;
+            border-radius: var(--r-md); border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px; font-weight: 600;
+            cursor: pointer; transition: all .18s var(--ease);
+            white-space: nowrap; line-height: 1;
         }
+        .btn-sm { padding: 6px 13px; font-size: 12px; border-radius: var(--r-sm); }
 
-        .btn-primary {
-            background: var(--btn-primary); 
-            color: white; 
-        }
-        .btn-primary:hover {
-            background: var(--btn-primary-hover); 
-        }
+        .btn-primary   { background: var(--blue);   color: var(--white); }
+        .btn-primary:hover { background: #2d5ab5; transform: translateY(-1px); }
 
-        .btn-success {
-            background: var(--btn-success); 
-            color: white; 
-        }
-        .btn-success:hover {
-            background: var(--btn-success-hover); 
-        }
+        .btn-success   { background: var(--green);  color: var(--white); }
+        .btn-success:hover { background: #22623d; transform: translateY(-1px); }
 
-        .btn-danger {
-            background: var(--btn-danger); 
-            color: white; 
-        }
-        .btn-danger:hover {
-            background: var(--btn-danger-hover); 
-        }
+        .btn-danger    { background: var(--red);    color: var(--white); }
+        .btn-danger:hover { background: var(--accent-dk); transform: translateY(-1px); }
 
-        .btn-warning {
-            background: var(--btn-warning); 
-            color: var(--text-inverse); 
-        }
-        .btn-warning:hover {
-            background: var(--btn-warning-hover); 
-        }
+        .btn-warning   { background: var(--amber);  color: var(--white); }
+        .btn-warning:hover { background: #9a7230; transform: translateY(-1px); }
 
         .btn-outline {
-            background: transparent; 
-            border: 1px solid var(--border-light); 
-            color: var(--text-primary); 
+            background: transparent;
+            border: 1.5px solid var(--warm2); color: var(--muted);
         }
-        .btn-outline:hover {
-            background: var(--bg-hover); 
-            border-color: var(--border-medium); 
-        }
+        .btn-outline:hover { border-color: var(--ink); color: var(--ink); background: var(--warm); }
 
-        
-        .btn-sm {
-            padding: 0.4rem 0.8rem; 
-            font-size: 0.75rem; 
-        }
+        .btn-ink { background: var(--ink); color: var(--white); }
+        .btn-ink:hover { background: var(--accent); transform: translateY(-1px); }
 
-        
+        /* ── ACTION BAR ────────────────────── */
         .action-bar {
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            flex-wrap: wrap; 
-            gap: 1rem; 
-            margin-bottom: 1.5rem; 
+            display: flex; align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap; gap: 12px; margin-bottom: 20px;
         }
-
         .search-group {
-            display: flex; 
-            gap: 0.5rem; 
-            align-items: center; 
-            flex: 2; 
-            min-width: 260px; 
+            display: flex; gap: 8px; align-items: center;
+            flex: 2; min-width: 240px;
         }
-
         .search-group input {
-            flex: 1; 
-            padding: 0.5rem 0.75rem; 
-            border: 1px solid var(--border-light); 
-            border-radius: var(--radius-md); 
-            font-size: 0.875rem; 
-            background: var(--bg-input); 
-            color: var(--text-primary); 
+            flex: 1; padding: 9px 13px;
+            border: 1.5px solid var(--warm2);
+            border-radius: var(--r-xl);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px; color: var(--ink);
+            background: var(--warm); outline: none;
+            transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
         }
-
         .search-group input:focus {
-            outline: none; 
-            border-color: var(--btn-primary); 
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); 
+            border-color: var(--ink);
+            box-shadow: 0 0 0 3px rgba(15,14,13,.06);
+            background: var(--white);
         }
-
+        .search-group input::placeholder { color: var(--mid); }
         .limit-group {
-            display: flex; 
-            align-items: center; 
-            gap: 0.5rem; 
+            display: flex; align-items: center; gap: 8px;
         }
-
         .limit-group label {
-            font-size: 0.75rem; 
-            font-weight: 500; 
-            color: var(--text-muted); 
+            font-size: 12px; font-weight: 600; color: var(--muted);
         }
-
         .limit-group select {
-            padding: 0.4rem 0.6rem; 
-            border-radius: var(--radius-sm); 
-            border: 1px solid var(--border-light); 
-            background: var(--bg-input); 
-            color: var(--text-primary); 
-            font-size: 0.8rem; 
+            padding: 7px 10px; border-radius: var(--r-sm);
+            border: 1.5px solid var(--warm2);
+            background: var(--warm); color: var(--ink);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px; outline: none; cursor: pointer;
         }
+        .limit-group select:focus { border-color: var(--ink); }
 
-        .limit-group select:focus {
-            outline: none; 
-            border-color: var(--btn-primary); 
+        /* ── PRODUCT / USER ROWS ───────────── */
+        .product-list, .user-list, .orders-list {
+            display: flex; flex-direction: column; gap: 8px;
         }
-
-        
-        .product-list {
-            display: flex; 
-            flex-direction: column; 
-            gap: 0.75rem; 
+        .product-item, .user-item {
+            display: flex; align-items: center;
+            justify-content: space-between;
+            background: var(--warm);
+            border: 1px solid rgba(201,194,184,.4);
+            border-radius: var(--r-md);
+            padding: 12px 16px;
+            transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
+            gap: 12px;
         }
-
-        .product-item {
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background: var(--bg-input); 
-            border: 1px solid var(--border-light); 
-            border-radius: var(--radius-lg); 
-            padding: 0.85rem 1rem; 
-            transition: var(--transition); 
+        .product-item:hover, .user-item:hover {
+            border-color: rgba(201,194,184,.8);
+            box-shadow: var(--shadow-sm);
         }
-
-        .product-item:hover {
-            border-color: var(--border-medium); 
-            background: var(--bg-hover); 
-        }
-
         .product-info {
-            display: flex; 
-            align-items: center; 
-            gap: 1rem; 
-            flex-wrap: wrap; 
+            display: flex; align-items: center;
+            gap: 14px; flex-wrap: wrap; flex: 1; min-width: 0;
         }
-
         .product-thumb {
-            width: 48px; 
-            height: 48px; 
-            background: var(--bg-tertiary); 
-            border-radius: var(--radius-sm); 
-            object-fit: cover; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
+            width: 52px; height: 52px;
+            background: var(--warm2);
+            border-radius: var(--r-sm);
+            object-fit: cover; flex-shrink: 0;
+            border: 1px solid rgba(201,194,184,.5);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .product-thumb svg { width: 22px; height: 22px; fill: var(--mid); }
+        .product-name {
+            font-size: 14px; font-weight: 600; color: var(--ink);
+        }
+        .product-meta {
+            font-size: 12px; color: var(--muted); margin-top: 3px;
+            display: flex; gap: 10px; flex-wrap: wrap;
+        }
+        .meta-chip {
+            background: var(--white); border: 1px solid rgba(201,194,184,.5);
+            border-radius: var(--r-xl); padding: 2px 9px;
+            font-size: 11px; font-weight: 600; color: var(--muted);
+        }
+        .product-actions, .user-actions {
+            display: flex; gap: 6px; flex-shrink: 0;
         }
 
-        .product-thumb svg {
-            width: 24px; 
-            height: 24px; 
-            fill: var(--text-muted); 
-        }
-
-        .product-details .product-name {
-            font-weight: 600; 
-            color: var(--text-primary); 
-        }
-
-        .product-details .product-meta {
-            font-size: 0.75rem; 
-            color: var(--text-muted); 
-            margin-top: 0.2rem; 
-        }
-
-        .product-actions {
-            display: flex; 
-            gap: 0.5rem; 
-        }
-
-        
+        /* ── TABLE (orders) ─────────────────── */
+        .table-wrap { overflow-x: auto; }
         .data-table {
-            width: 100%; 
-            border-collapse: collapse; 
-            font-size: 0.875rem; 
+            width: 100%; border-collapse: collapse;
+            font-size: 13px; min-width: 680px;
         }
-
+        .data-table thead tr {
+            background: var(--warm);
+            border-bottom: 1.5px solid var(--warm2);
+        }
         .data-table th {
-            text-align: left; 
-            padding: 0.75rem 0.5rem; 
-            background: var(--bg-card-header); 
-            font-weight: 600; 
-            color: var(--text-secondary); 
-            border-bottom: 1px solid var(--border-light); 
+            text-align: left; padding: 11px 14px;
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 1px; text-transform: uppercase;
+            color: var(--muted); white-space: nowrap;
         }
-
         .data-table td {
-            padding: 0.75rem 0.5rem; 
-            border-bottom: 1px solid var(--border-light); 
-            vertical-align: top; 
-            color: var(--text-primary); 
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(201,194,184,.35);
+            color: var(--ink); vertical-align: top; line-height: 1.5;
         }
-
-        .data-table tr:hover td {
-            background: var(--bg-hover); 
-        }
+        .data-table tbody tr:last-child td { border-bottom: none; }
+        .data-table tbody tr:hover td { background: var(--warm); }
 
         .badge {
-            background: var(--bg-card-header); 
-            color: var(--text-secondary); 
-            padding: 0.2rem 0.5rem; 
-            border-radius: 999px; 
-            font-size: 0.7rem; 
-            font-weight: 500; 
+            display: inline-block;
+            background: var(--warm2);
+            color: var(--muted); border-radius: var(--r-xl);
+            padding: 2px 9px; font-size: 11px; font-weight: 600;
         }
 
-        
+        /* ── EMPTY / RESULTS ───────────────── */
+        .empty-state {
+            text-align: center; padding: 48px 20px;
+            color: var(--muted); font-size: 14px;
+        }
+        .results-info {
+            font-size: 12px; color: var(--muted);
+            text-align: right; margin-top: 12px;
+            font-weight: 500;
+        }
+
+        /* ── MODAL ─────────────────────────── */
         .modal {
-            display: none; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(0, 0, 0, 0.7); 
-            justify-content: center; 
-            align-items: center; 
-            z-index: 1000; 
-            backdrop-filter: blur(4px); 
+            display: none; position: fixed; inset: 0;
+            background: rgba(15,14,13,.55);
+            backdrop-filter: blur(6px);
+            justify-content: center; align-items: center;
+            z-index: 1000; padding: 20px;
         }
-
         .modal-content {
-            background: var(--bg-card); 
-            border-radius: var(--radius-xl); 
-            max-width: 820px; 
-            width: 90%; 
-            max-height: 85vh; 
-            overflow-y: auto; 
-            padding: 1.5rem; 
-            box-shadow: var(--shadow-lg); 
-            border: 1px solid var(--border-light); 
+            background: var(--white);
+            border-radius: var(--r-lg);
+            width: 90%; max-width: 820px;
+            max-height: 88vh; overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(201,194,184,.4);
+            animation: mup .25s var(--ease);
         }
+        @keyframes mup { from{transform:translateY(16px);opacity:0} to{transform:translateY(0);opacity:1} }
+        .edit-user-modal .modal-content { max-width: 500px; }
 
         .modal-header {
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 1rem; 
-            padding-bottom: 0.75rem; 
-            border-bottom: 1px solid var(--border-light); 
+            display: flex; align-items: center;
+            justify-content: space-between;
+            padding: 18px 24px;
+            border-bottom: 1px solid rgba(201,194,184,.35);
+            background: var(--warm);
+            position: sticky; top: 0; z-index: 1;
+            border-radius: var(--r-lg) var(--r-lg) 0 0;
         }
-
         .modal-header h3 {
-            font-size: 1.25rem; 
-            font-weight: 600; 
-            color: var(--text-primary); 
+            font-family: 'Playfair Display', serif;
+            font-size: 18px; font-weight: 700; color: var(--ink);
         }
-
         .modal-close {
-            font-size: 1.5rem; 
-            line-height: 1; 
-            cursor: pointer; 
-            color: var(--text-muted); 
-            transition: color 0.2s; 
+            width: 30px; height: 30px;
+            background: var(--warm2); border: 1.5px solid var(--mid);
+            border-radius: var(--r-sm); color: var(--muted);
+            font-size: 18px; line-height: 1; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all .18s var(--ease);
         }
+        .modal-close:hover { border-color: var(--accent); color: var(--accent); }
 
-        .modal-close:hover {
-            color: var(--text-primary); 
-        }
+        .modal-body { padding: 24px; }
+        .modal-body .form-field { margin-bottom: 14px; }
 
-        
+        /* ── ATTR TABLE ────────────────────── */
         .attr-table {
-            width: 100%; 
-            border-collapse: collapse; 
-            margin: 1rem 0; 
+            width: 100%; border-collapse: collapse;
+            margin: 14px 0; font-size: 13px;
         }
-
-        .attr-table th,
-        .attr-table td {
-            border: 1px solid var(--border-light); 
-            padding: 0.6rem; 
-            text-align: left; 
-            vertical-align: middle; 
-            color: var(--text-primary); 
+        .attr-table th, .attr-table td {
+            padding: 9px 12px; text-align: left;
+            vertical-align: middle;
+            border-bottom: 1px solid rgba(201,194,184,.35);
         }
-
+        .attr-table thead tr { background: var(--warm); }
         .attr-table th {
-            background: var(--bg-card-header); 
-            font-weight: 600; 
-            color: var(--text-secondary); 
+            font-size: 11px; font-weight: 700;
+            letter-spacing: 1px; text-transform: uppercase; color: var(--muted);
         }
+        .attr-table tbody tr:hover td { background: var(--warm); }
+        .selected-row td { background: var(--accent-lt) !important; }
 
         .drag-handle {
-            cursor: grab; 
-            color: var(--text-muted); 
-            display: inline-block; 
-            font-size: 1.2rem; 
-            line-height: 1; 
-            user-select: none; 
+            cursor: grab; color: var(--mid);
+            font-size: 14px; line-height: 1;
+            user-select: none; display: inline-block;
         }
-
-        .drag-handle:active {
-            cursor: grabbing; 
-        }
-
-        .selected-row {
-            background-color: var(--bg-card-header) !important; 
-        }
+        .drag-handle:active { cursor: grabbing; }
 
         .sorting-controls {
-            display: flex; 
-            gap: 0.75rem; 
-            margin: 0.75rem 0 1rem 0; 
-            flex-wrap: wrap; 
+            display: flex; gap: 8px; align-items: center;
+            margin: 10px 0 16px; flex-wrap: wrap;
+        }
+        .sorting-controls span {
+            font-size: 11px; color: var(--muted);
+            margin-left: auto; font-style: italic;
         }
 
+        /* ── REVIEW CARD (inside modal) ─────── */
         .review-item {
-            background: var(--bg-card-header); 
-            border-left: 3px solid var(--btn-warning); 
-            padding: 0.75rem; 
-            margin-bottom: 0.75rem; 
-            border-radius: var(--radius-md); 
+            background: var(--warm);
+            border: 1px solid rgba(201,194,184,.4);
+            border-left: 3px solid var(--amber);
+            border-radius: var(--r-md);
+            padding: 12px 14px; margin-bottom: 10px;
         }
-
-        .empty-state {
-            text-align: center; 
-            padding: 2rem; 
-            color: var(--text-muted); 
-            font-size: 0.875rem; 
+        .review-item .r-top {
+            display: flex; justify-content: space-between;
+            align-items: center; margin-bottom: 6px;
         }
-
-        .results-info {
-            font-size: 0.75rem; 
-            color: var(--text-muted); 
-            margin-top: 1rem; 
-            text-align: right; 
+        .review-item .r-author { font-size: 13px; font-weight: 700; color: var(--ink); }
+        .review-item .r-rating {
+            font-size: 12px; font-weight: 600;
+            background: var(--amber-lt); color: var(--amber);
+            padding: 2px 9px; border-radius: var(--r-xl);
         }
+        .review-item .r-text { font-size: 13px; color: var(--muted); line-height: 1.55; }
+        .review-item .r-date { font-size: 11px; color: var(--mid); margin-top: 5px; }
 
-        
-        hr {
-            margin: 1rem 0; 
-            border: none; 
-            border-top: 1px solid var(--border-light); 
+        /* ── INLINE ATTR/REVIEW FORM INSIDE MODAL ── */
+        .inline-form-row {
+            display: flex; gap: 8px; align-items: flex-end;
+            flex-wrap: wrap; margin-top: 10px;
         }
-
-        .form-actions {
-            display: flex; 
-            gap: 0.75rem; 
-            flex-wrap: wrap; 
+        .inline-form-row input, .inline-form-row select {
+            flex: 1; min-width: 100px;
+            padding: 9px 12px; border: 1.5px solid var(--warm2);
+            border-radius: var(--r-md); font-family: 'DM Sans', sans-serif;
+            font-size: 13px; color: var(--ink); background: var(--warm);
+            outline: none; transition: border-color .2s var(--ease);
         }
+        .inline-form-row input:focus, .inline-form-row select:focus {
+            border-color: var(--ink); background: var(--white);
+        }
+        .inline-form-row input::placeholder { color: var(--mid); }
+        .modal-section-label {
+            font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+            text-transform: uppercase; color: var(--muted);
+            margin: 20px 0 10px; display: flex; align-items: center; gap: 10px;
+        }
+        .modal-section-label::after { content: ''; flex: 1; height: 1px; background: var(--warm2); }
+        hr { border: none; border-top: 1px solid var(--warm2); margin: 20px 0; }
 
-        
-        @media (max-width: 768px) {
-            body {
-                padding: 1rem; 
-            }
-
-            .header-card {
-                padding: 1rem; 
-            }
-
-            .card-body {
-                padding: 1rem; 
-            }
-
-            .form-grid {
-                gap: 1rem; 
-            }
-
-            .form-field {
-                min-width: 100%; 
-            }
-
-            .action-bar {
-                flex-direction: column; 
-                align-items: stretch; 
-            }
-
-            .search-group {
-                flex: 1; 
-            }
-
-            .product-item {
-                flex-direction: column; 
-                align-items: flex-start; 
-                gap: 0.75rem; 
-            }
-
-            .product-actions {
-                width: 100%; 
-                justify-content: flex-end; 
-            }
-
-            .modal-content {
-                padding: 1rem; 
-            }
+        /* ── RESPONSIVE ────────────────────── */
+        @media(max-width:768px){
+            .admin-wrap { padding: 20px 16px 48px; }
+            .topnav-inner { padding: 0 16px; }
+            .card-body { padding: 16px; }
+            .form-field { min-width: 100%; }
+            .action-bar { flex-direction: column; align-items: stretch; }
+            .product-item, .user-item { flex-direction: column; align-items: flex-start; }
+            .product-actions, .user-actions { width: 100%; justify-content: flex-end; }
+            .tabs { flex-wrap: wrap; }
+            .tab-btn { padding: 10px 14px; font-size: 13px; }
         }
     </style>
 </head>
 <body>
-    <!-- Main admin dashboard wrapper -->
-    <div class="admin-container">
-        <!-- Page header and summary -->
-        <div class="header-card">
-            <h1>Admin Dashboard</h1> <!-- Page title -->
-            <p>Manage products, inventory, orders, and customer feedback from one place.</p> <!-- Description -->
-        </div>
 
-        <!-- Product Management Card (Add/Edit Product) -->
+<!-- TOP NAV -->
+<nav class="topnav">
+    <div class="topnav-inner">
+        <a href="#" class="brand">Tech<span>Vault</span></a>
+        <span class="nav-tag">Admin Console</span>
+    </div>
+</nav>
+
+<div class="admin-wrap">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+        <h1>Dashboard</h1>
+        <p>Manage products, orders, and customer accounts</p>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="products">Product Management</button>
+        <button class="tab-btn" data-tab="orders">Customer Orders</button>
+        <button class="tab-btn" data-tab="accounts">Customer Accounts</button>
+    </div>
+
+    <!-- PRODUCT MANAGEMENT TAB -->
+    <div id="tab-products" class="tab-content active">
+
         <div class="card">
             <div class="card-header">
-                <h2>Product Management</h2> <!-- Card title -->
+                <h2>Add / Edit Product</h2>
             </div>
             <div class="card-body">
-                <!-- Product creation and edit form -->
-                <form id="productForm" enctype="multipart/form-data"> <!-- Form with file upload support -->
-                    <input type="hidden" id="productId"> <!-- Hidden field for product ID (edit mode) -->
+                <form id="productForm" enctype="multipart/form-data">
+                    <input type="hidden" id="productId">
                     <div class="form-grid">
                         <div class="form-field">
-                            <label>Product Name</label> <!-- Label -->
-                            <input type="text" id="prodName" required> <!-- Text input, required -->
+                            <label>Product Name</label>
+                            <input type="text" id="prodName" placeholder="e.g. Sony WH-1000XM5" required>
                         </div>
                         <div class="form-field">
-                            <label>Price (USD)</label> <!-- Label -->
-                            <input type="number" id="prodPrice" step="0.01" required> <!-- Number input with decimals -->
+                            <label>Price (USD)</label>
+                            <input type="number" id="prodPrice" step="0.01" placeholder="0.00" required>
                         </div>
                         <div class="form-field">
-                            <label>Stock</label> <!-- Label -->
-                            <input type="number" id="prodStock" required> <!-- Number input for stock -->
+                            <label>Stock</label>
+                            <input type="number" id="prodStock" placeholder="0" required>
                         </div>
                         <div class="form-field">
-                            <label>Category</label> <!-- Label -->
-                            <input type="text" id="prodCategory"> <!-- Optional category -->
+                            <label>Category</label>
+                            <input type="text" id="prodCategory" placeholder="e.g. IEM, Keyboard, Mouse">
                         </div>
                         <div class="form-field">
-                            <label>Product Image</label> <!-- Label -->
-                            <input type="file" id="prodImage" accept="image/*"> <!-- File picker (images only) -->
+                            <label>Product Image</label>
+                            <input type="file" id="prodImage" accept="image/*">
                         </div>
                     </div>
-                    <!-- Current image preview (shown when editing an existing product) -->
-                    <div id="currentImageContainer" style="display:none; margin-bottom:1rem;">
-                        <label>Current Image:</label><br> <!-- Label -->
-                        <img id="currentImagePreview" style="max-width:80px; border-radius:8px; margin-top:6px; background:var(--bg-tertiary);"> <!-- Image preview -->
+                    <div class="img-preview-wrap" id="currentImageContainer" style="display:none; display:flex;">
+                        <label>Current Image</label>
+                        <img id="currentImagePreview" src="" alt="Current product image">
                     </div>
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-success">Save Product</button> <!-- Submit button -->
-                        <button type="button" id="clearFormBtn" class="btn btn-outline">Clear Form</button> <!-- Clear button -->
+                        <button type="submit" class="btn btn-success">Save Product</button>
+                        <button type="button" id="clearFormBtn" class="btn btn-outline">Clear Form</button>
                     </div>
                 </form>
             </div>
         </div>
 
-        <!-- Product Catalog Card (list of products with search/pagination) -->
         <div class="card">
             <div class="card-header">
-                <h2>Product Catalog</h2> <!-- Card title -->
+                <h2>Product Catalog</h2>
             </div>
             <div class="card-body">
-                <!-- Product catalog search and filter controls -->
                 <div class="action-bar">
                     <div class="search-group">
-                        <input type="text" id="productSearch" placeholder="Search by name or category..."> <!-- Search input -->
-                        <button id="searchProductsBtn" class="btn btn-primary btn-sm">Search</button> <!-- Search button -->
-                        <button id="resetProductsBtn" class="btn btn-outline btn-sm">Reset</button> <!-- Reset button -->
+                        <input type="text" id="productSearch" placeholder="Search by name or category...">
+                        <button id="searchProductsBtn" class="btn btn-ink btn-sm">Search</button>
+                        <button id="resetProductsBtn" class="btn btn-outline btn-sm">Reset</button>
                     </div>
                     <div class="limit-group">
-                        <label>Show</label> <!-- Label -->
-                        <select id="productLimit"> <!-- Limit dropdown -->
-                            <option value="5">5</option> <!-- 5 per page -->
-                            <option value="10" selected>10</option> <!-- 10 per page (default) -->
-                            <option value="25">25</option> <!-- 25 per page -->
-                            <option value="50">50</option> <!-- 50 per page -->
-                            <option value="999999">All</option> <!-- Show all -->
+                        <label>Show</label>
+                        <select id="productLimit">
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="999999">All</option>
                         </select>
                     </div>
                 </div>
-                <div id="adminProductList" class="product-list"></div> <!-- Dynamic product list -->
-                <div id="productResultsInfo" class="results-info"></div> <!-- Results count info -->
+                <div id="adminProductList" class="product-list"></div>
+                <div id="productResultsInfo" class="results-info"></div>
             </div>
         </div>
 
-        <!-- Customer Orders Card (orders list with search/pagination) -->
+    </div><!-- /tab-products -->
+
+    <!-- ORDERS TAB -->
+    <div id="tab-orders" class="tab-content">
         <div class="card">
             <div class="card-header">
-                <h2>Customer Orders</h2> <!-- Card title -->
+                <h2>Customer Orders</h2>
             </div>
             <div class="card-body">
-                <!-- Order search and limit selector -->
                 <div class="action-bar">
                     <div class="search-group">
-                        <input type="text" id="orderSearch" placeholder="Search by customer, email or product..."> <!-- Search input -->
-                        <button id="searchOrdersBtn" class="btn btn-primary btn-sm">Search</button> <!-- Search button -->
-                        <button id="resetOrdersBtn" class="btn btn-outline btn-sm">Reset</button> <!-- Reset button -->
+                        <input type="text" id="orderSearch" placeholder="Search by customer, email or product...">
+                        <button id="searchOrdersBtn" class="btn btn-ink btn-sm">Search</button>
+                        <button id="resetOrdersBtn" class="btn btn-outline btn-sm">Reset</button>
                     </div>
                     <div class="limit-group">
-                        <label>Show</label> <!-- Label -->
-                        <select id="orderLimit"> <!-- Limit dropdown -->
-                            <option value="5">5</option> <!-- 5 per page -->
-                            <option value="10" selected>10</option> <!-- 10 per page (default) -->
-                            <option value="25">25</option> <!-- 25 per page -->
-                            <option value="50">50</option> <!-- 50 per page -->
-                            <option value="999999">All</option> <!-- Show all -->
+                        <label>Show</label>
+                        <select id="orderLimit">
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="999999">All</option>
                         </select>
                     </div>
                 </div>
-                <div id="ordersList"></div> <!-- Dynamic orders table -->
-                <div id="orderResultsInfo" class="results-info"></div> <!-- Results count info -->
+                <div class="table-wrap">
+                    <div id="ordersList" class="orders-list"></div>
+                </div>
+                <div id="orderResultsInfo" class="results-info"></div>
             </div>
         </div>
     </div>
 
-    <!-- Modal for product details (attributes & reviews) -->
-    <div id="detailModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="detailProductName">Manage Product</h3> <!-- Dynamic product name -->
-                <span class="modal-close">&times;</span> <!-- Close button -->
+    <!-- ACCOUNTS TAB -->
+    <div id="tab-accounts" class="tab-content">
+        <div class="card">
+            <div class="card-header">
+                <h2>Customer Accounts</h2>
             </div>
-            <div id="detailContent"></div> <!-- Dynamic content (attributes, reviews, forms) -->
+            <div class="card-body">
+                <div class="action-bar">
+                    <div class="search-group">
+                        <input type="text" id="userSearch" placeholder="Search by name or email...">
+                        <button id="searchUsersBtn" class="btn btn-ink btn-sm">Search</button>
+                        <button id="resetUsersBtn" class="btn btn-outline btn-sm">Reset</button>
+                    </div>
+                    <div class="limit-group">
+                        <label>Show</label>
+                        <select id="userLimit">
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="999999">All</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="userList" class="user-list"></div>
+                <div id="userResultsInfo" class="results-info"></div>
+            </div>
         </div>
     </div>
 
-    <script>
-        /* ---------- JAVASCRIPT ---------- */
-        /* API base URL and application state */
-        const API = 'http://localhost:5000'; // Backend API endpoint
-        let allProducts = [];                // Complete product list from database
-        let allOrders = [];                  // Complete orders list from database
-        let currentAttributeOrder = [];      // Custom order of attribute keys (for reordering)
-        let productSearchTerm = '';          // Current product search text
-        let productCurrentLimit = 10;        // Number of products to show per page
-        let orderSearchTerm = '';            // Current order search text
-        let orderCurrentLimit = 10;          // Number of orders to show per page
+</div><!-- /admin-wrap -->
 
-        /* ---------- UTILITY HELPERS ---------- */
-        // Escape special HTML characters to prevent XSS attacks
-        function escapeHtml(str) {
-            if (!str) return ''; // Return empty string if null/undefined
-            return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]); // Replace &, <, >
+<!-- PRODUCT DETAIL MODAL (attributes & reviews) -->
+<div id="detailModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="detailProductName">Manage Product</h3>
+            <button class="modal-close" title="Close">&times;</button>
+        </div>
+        <div class="modal-body" id="detailContent"></div>
+    </div>
+</div>
+
+<!-- EDIT USER MODAL -->
+<div id="editUserModal" class="modal edit-user-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Edit Customer</h3>
+            <button class="modal-close" id="closeEditUserModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="editUserId">
+            <div class="form-field">
+                <label>Full Name</label>
+                <input type="text" id="editFullName" placeholder="Full name">
+            </div>
+            <div class="form-field">
+                <label>Email</label>
+                <input type="email" id="editEmail" placeholder="Email address">
+            </div>
+            <!-- MODIFIED: input type changed from "text" to "date" for calendar picker -->
+            <div class="form-field">
+                <label>Birth Date</label>
+                <input type="date" id="editBirthdate">
+            </div>
+            <div class="form-field">
+                <label>Shipping Address</label>
+                <textarea id="editAddress" rows="3" placeholder="Full shipping address"></textarea>
+            </div>
+            <div class="form-actions" style="margin-top:4px">
+                <button id="saveUserEditBtn" class="btn btn-success">Save Changes</button>
+                <button id="cancelUserEditBtn" class="btn btn-outline">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API = 'https://7m2hvlrc-5000.asse.devtunnels.ms';
+    let allProducts = [];
+    let allOrders = [];
+    let allUsers = [];
+    let currentAttributeOrder = [];
+    let productSearchTerm = '';
+    let productCurrentLimit = 10;
+    let orderSearchTerm = '';
+    let orderCurrentLimit = 10;
+    let userSearchTerm = '';
+    let userCurrentLimit = 10;
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]);
+    }
+
+    // ---------- PRODUCTS ----------
+    async function loadProducts() {
+        const res = await fetch(`${API}/api/products`);
+        allProducts = await res.json();
+        filterAndRenderProducts();
+    }
+
+    function filterAndRenderProducts() {
+        let filtered = [...allProducts];
+        if (productSearchTerm) {
+            const term = productSearchTerm.toLowerCase();
+            filtered = filtered.filter(p => p.name.toLowerCase().includes(term) || (p.category && p.category.toLowerCase().includes(term)));
         }
+        const display = productCurrentLimit === 999999 ? filtered : filtered.slice(0, productCurrentLimit);
+        renderProductList(display, filtered.length);
+    }
 
-        /* ---------- PRODUCT DATA & LISTS ---------- */
-        // Fetch all products from backend
-        async function loadProducts() {
-            const res = await fetch(`${API}/api/products`); // GET request
-            allProducts = await res.json();                 // Parse JSON
-            filterAndRenderProducts();                       // Apply filters and render
+    function renderProductList(productsToShow, totalCount) {
+        const container = document.getElementById('adminProductList');
+        if (!productsToShow.length) {
+            container.innerHTML = '<div class="empty-state">No products found</div>';
+            document.getElementById('productResultsInfo').innerHTML = '';
+            return;
         }
-
-        // Apply search filter and pagination limit to products
-        function filterAndRenderProducts() {
-            // Start with copy of all products
-            let filtered = [...allProducts];
-            // If there is a search term, filter by name or category
-            if (productSearchTerm) {
-                const term = productSearchTerm.toLowerCase();
-                filtered = filtered.filter(p => p.name.toLowerCase().includes(term) || (p.category && p.category.toLowerCase().includes(term)));
-            }
-            // Apply limit: if limit is 999999, show all; otherwise take first N
-            const display = productCurrentLimit === 999999 ? filtered : filtered.slice(0, productCurrentLimit);
-            // Render the product list
-            renderProductList(display, filtered.length);
-        }
-
-        // Render product list in DOM
-        function renderProductList(productsToShow, totalCount) {
-            const container = document.getElementById('adminProductList'); // Get container
-            if (!productsToShow.length) {
-                // Show empty state if no products
-                container.innerHTML = '<div class="empty-state">No products found</div>';
-                document.getElementById('productResultsInfo').innerHTML = '';
-                return;
-            }
-            container.innerHTML = ''; // Clear container
-            // Loop through each product
-            productsToShow.forEach(p => {
-                const div = document.createElement('div'); // Create product item div
-                div.className = 'product-item'; // Set class
-                // Generate thumbnail HTML (image or placeholder icon)
-                const thumbHtml = p.image_url
-                    ? `<img src="${API}${escapeHtml(p.image_url)}" class="product-thumb" onerror="this.style.display='none'">`
-                    : `<svg class="product-thumb" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>`;
-                // Build inner HTML
-                div.innerHTML = `
-                    <div class="product-info">
-                        ${thumbHtml}
-                        <div class="product-details">
-                            <div class="product-name">${escapeHtml(p.name)}</div>
-                            <div class="product-meta">$${p.price} | Stock: ${p.stock} | Category: ${escapeHtml(p.category || 'Uncategorized')}</div>
+        container.innerHTML = '';
+        productsToShow.forEach(p => {
+            const div = document.createElement('div');
+            div.className = 'product-item';
+            const thumbHtml = p.image_url
+                ? `<img src="${API}${escapeHtml(p.image_url)}" class="product-thumb" onerror="this.style.display='none'">`
+                : `<div class="product-thumb"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>`;
+            div.innerHTML = `
+                <div class="product-info">
+                    ${thumbHtml}
+                    <div>
+                        <div class="product-name">${escapeHtml(p.name)}</div>
+                        <div class="product-meta">
+                            <span class="meta-chip">$${p.price}</span>
+                            <span class="meta-chip">Stock: ${p.stock}</span>
+                            <span class="meta-chip">${escapeHtml(p.category || 'Uncategorized')}</span>
                         </div>
                     </div>
-                    <div class="product-actions">
-                        <button class="btn btn-warning btn-sm manage" data-id="${p.id}">Manage</button>
-                        <button class="btn btn-primary btn-sm edit" data-id="${p.id}">Edit</button>
-                        <button class="btn btn-danger btn-sm delete" data-id="${p.id}">Delete</button>
-                    </div>
-                `;
-                // Attach event listeners
-                div.querySelector('.manage').addEventListener('click', () => openDetailModal(p.id));
-                div.querySelector('.edit').addEventListener('click', () => fillEditForm(p));
-                div.querySelector('.delete').addEventListener('click', async () => {
-                    if (confirm(`Delete "${p.name}" permanently? This also removes its attributes and reviews.`)) {
-                        await fetch(`${API}/api/products/${p.id}`, { method: 'DELETE' }); // DELETE request
-                        loadProducts(); // Refresh product list
-                    }
-                });
-                container.appendChild(div); // Append to container
-            });
-            // Update results info text
-            document.getElementById('productResultsInfo').innerHTML = `Showing ${productsToShow.length} of ${totalCount} products`;
-        }
-
-        /* ---------- ORDER DATA & LISTS ---------- */
-        // Fetch all orders from backend
-        async function loadOrders() {
-            const res = await fetch(`${API}/api/orders`); // GET request
-            allOrders = await res.json();                 // Parse JSON
-            filterAndRenderOrders();                       // Apply filters and render
-        }
-
-        // Apply search filter and pagination limit to orders
-        function filterAndRenderOrders() {
-            let filtered = [...allOrders];
-            if (orderSearchTerm) {
-                const term = orderSearchTerm.toLowerCase();
-                // Filter by customer name, email, or product summary
-                filtered = filtered.filter(o =>
-                    o.customer_name.toLowerCase().includes(term) ||
-                    (o.customer_email && o.customer_email.toLowerCase().includes(term)) ||
-                    (o.items_summary && o.items_summary.toLowerCase().includes(term))
-                );
-            }
-            // Sort orders by date (oldest first)
-            filtered.sort((a, b) => new Date(a.order_date) - new Date(b.order_date));
-            const display = orderCurrentLimit === 999999 ? filtered : filtered.slice(0, orderCurrentLimit);
-            renderOrdersTable(display, filtered.length);
-        }
-
-        // Render orders table in DOM
-        function renderOrdersTable(ordersToShow, totalCount) {
-            const container = document.getElementById('ordersList');
-            if (!ordersToShow.length) {
-                container.innerHTML = '<div class="empty-state">No orders found</div>';
-                document.getElementById('orderResultsInfo').innerHTML = '';
-                return;
-            }
-            // Build HTML table
-            let html = `<table class="data-table">
-                <thead>
-                    <tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Order Date</th><th>Delivery Date</th></tr>
-                </thead>
-                <tbody>`;
-            ordersToShow.forEach(o => {
-                let itemsList = '';
-                if (o.items && o.items.length) {
-                    itemsList = o.items.map(i => `${escapeHtml(i.product_name)} (x${i.quantity})`).join('<br>');
-                } else {
-                    itemsList = o.items_summary || '-';
+                </div>
+                <div class="product-actions">
+                    <button class="btn btn-warning btn-sm manage" data-id="${p.id}">Manage</button>
+                    <button class="btn btn-primary btn-sm edit" data-id="${p.id}">Edit</button>
+                    <button class="btn btn-danger btn-sm delete" data-id="${p.id}">Delete</button>
+                </div>`;
+            div.querySelector('.manage').addEventListener('click', () => openDetailModal(p.id));
+            div.querySelector('.edit').addEventListener('click', () => fillEditForm(p));
+            div.querySelector('.delete').addEventListener('click', async () => {
+                if (confirm(`Delete "${p.name}" permanently? This also removes its attributes and reviews.`)) {
+                    await fetch(`${API}/api/products/${p.id}`, { method: 'DELETE' });
+                    loadProducts();
                 }
-                html += `<tr>
-                    <td>${o.id}</td> <!-- Order ID -->
-                    <td><strong>${escapeHtml(o.customer_name)}</strong><br><span class="badge">${escapeHtml(o.customer_email || '')}</span></td> <!-- Customer -->
-                    <td>${itemsList}</td> <!-- Items -->
-                    <td>$${parseFloat(o.total_amount).toFixed(2)}</td> <!-- Total amount -->
-                    <td>${new Date(o.order_date).toLocaleDateString()}</td> <!-- Order date -->
-                    <td>${new Date(o.delivery_date).toLocaleDateString()}</td> <!-- Delivery date -->
-                </tr>`;
             });
-            html += `</tbody></table>`;
-            container.innerHTML = html; // Insert HTML
-            document.getElementById('orderResultsInfo').innerHTML = `Showing ${ordersToShow.length} of ${totalCount} orders`;
-        }
-
-        /* ---------- EDIT PRODUCT FORM ---------- */
-        // Pre‑populate the product form with existing product data (for editing)
-        function fillEditForm(product) {
-            document.getElementById('productId').value = product.id; // Set hidden ID
-            document.getElementById('prodName').value = product.name; // Product name
-            document.getElementById('prodPrice').value = product.price; // Price
-            document.getElementById('prodStock').value = product.stock; // Stock
-            document.getElementById('prodCategory').value = product.category || ''; // Category
-            document.getElementById('prodImage').value = ''; // Clear file input
-            // Show current image preview if exists
-            if (product.image_url) {
-                document.getElementById('currentImageContainer').style.display = 'block';
-                document.getElementById('currentImagePreview').src = API + product.image_url;
-            } else {
-                document.getElementById('currentImageContainer').style.display = 'none';
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
-        }
-
-        // Handle product form submission (create or update)
-        document.getElementById('productForm').addEventListener('submit', async (e) => {
-            e.preventDefault(); // Prevent page reload
-            const id = document.getElementById('productId').value; // Product ID (empty for new)
-            const name = document.getElementById('prodName').value.trim();
-            const price = parseFloat(document.getElementById('prodPrice').value);
-            const stock = parseInt(document.getElementById('prodStock').value);
-            const category = document.getElementById('prodCategory').value.trim();
-            const imageFile = document.getElementById('prodImage').files[0];
-
-            if (!name || isNaN(price) || isNaN(stock)) return alert('Name, price and stock are required');
-
-            const formData = new FormData(); // Create FormData object for multipart upload
-            formData.append('name', name);
-            formData.append('price', price);
-            formData.append('stock', stock);
-            formData.append('category', category);
-            if (imageFile) formData.append('image', imageFile); // Add image if provided
-
-            const url = id ? `${API}/api/products/${id}` : `${API}/api/products`; // Endpoint
-            const method = id ? 'PUT' : 'POST'; // PUT for update, POST for create
-
-            const resp = await fetch(url, { method, body: formData }); // Send request
-            if (resp.ok) {
-                // Reset form after successful save
-                document.getElementById('productForm').reset();
-                document.getElementById('productId').value = '';
-                document.getElementById('currentImageContainer').style.display = 'none';
-                loadProducts(); // Refresh product list
-            } else {
-                const err = await resp.json();
-                alert('Error: ' + err.error);
-            }
+            container.appendChild(div);
         });
+        document.getElementById('productResultsInfo').innerHTML = `Showing ${productsToShow.length} of ${totalCount} products`;
+    }
 
-        // Clear form button: reset fields and remove edit state
-        document.getElementById('clearFormBtn').addEventListener('click', () => {
+    function fillEditForm(product) {
+        document.getElementById('productId').value = product.id;
+        document.getElementById('prodName').value = product.name;
+        document.getElementById('prodPrice').value = product.price;
+        document.getElementById('prodStock').value = product.stock;
+        document.getElementById('prodCategory').value = product.category || '';
+        document.getElementById('prodImage').value = '';
+        const imgWrap = document.getElementById('currentImageContainer');
+        if (product.image_url) {
+            imgWrap.style.display = 'flex';
+            document.getElementById('currentImagePreview').src = API + product.image_url;
+        } else {
+            imgWrap.style.display = 'none';
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('productForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('productId').value;
+        const name = document.getElementById('prodName').value.trim();
+        const price = parseFloat(document.getElementById('prodPrice').value);
+        const stock = parseInt(document.getElementById('prodStock').value);
+        const category = document.getElementById('prodCategory').value.trim();
+        const imageFile = document.getElementById('prodImage').files[0];
+        if (!name || isNaN(price) || isNaN(stock)) return alert('Name, price and stock are required');
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('price', price);
+        formData.append('stock', stock);
+        formData.append('category', category);
+        if (imageFile) formData.append('image', imageFile);
+        const url = id ? `${API}/api/products/${id}` : `${API}/api/products`;
+        const method = id ? 'PUT' : 'POST';
+        const resp = await fetch(url, { method, body: formData });
+        if (resp.ok) {
             document.getElementById('productForm').reset();
             document.getElementById('productId').value = '';
             document.getElementById('currentImageContainer').style.display = 'none';
-        });
+            loadProducts();
+        } else {
+            const err = await resp.json();
+            alert('Error: ' + err.error);
+        }
+    });
 
-        // Product search & limit event listeners
-        document.getElementById('searchProductsBtn').onclick = () => {
-            productSearchTerm = document.getElementById('productSearch').value.trim(); // Read search term
-            filterAndRenderProducts(); // Re‑filter and render
-        };
-        document.getElementById('resetProductsBtn').onclick = () => {
-            document.getElementById('productSearch').value = ''; // Clear input
-            productSearchTerm = ''; // Clear search term
-            filterAndRenderProducts(); // Show all
-        };
-        document.getElementById('productLimit').onchange = (e) => {
-            productCurrentLimit = parseInt(e.target.value); // Update limit
-            filterAndRenderProducts(); // Re‑render
-        };
-        document.getElementById('productSearch').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                productSearchTerm = document.getElementById('productSearch').value.trim();
-                filterAndRenderProducts();
-            }
-        });
+    document.getElementById('clearFormBtn').addEventListener('click', () => {
+        document.getElementById('productForm').reset();
+        document.getElementById('productId').value = '';
+        document.getElementById('currentImageContainer').style.display = 'none';
+    });
 
-        // Order search & limit event listeners
-        document.getElementById('searchOrdersBtn').onclick = () => {
-            orderSearchTerm = document.getElementById('orderSearch').value.trim();
-            filterAndRenderOrders();
-        };
-        document.getElementById('resetOrdersBtn').onclick = () => {
-            document.getElementById('orderSearch').value = '';
-            orderSearchTerm = '';
-            filterAndRenderOrders();
-        };
-        document.getElementById('orderLimit').onchange = (e) => {
-            orderCurrentLimit = parseInt(e.target.value);
-            filterAndRenderOrders();
-        };
-        document.getElementById('orderSearch').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                orderSearchTerm = document.getElementById('orderSearch').value.trim();
-                filterAndRenderOrders();
-            }
-        });
+    document.getElementById('searchProductsBtn').onclick = () => { productSearchTerm = document.getElementById('productSearch').value.trim(); filterAndRenderProducts(); };
+    document.getElementById('resetProductsBtn').onclick = () => { document.getElementById('productSearch').value = ''; productSearchTerm = ''; filterAndRenderProducts(); };
+    document.getElementById('productLimit').onchange = (e) => { productCurrentLimit = parseInt(e.target.value); filterAndRenderProducts(); };
+    document.getElementById('productSearch').addEventListener('keypress', (e) => { if (e.key === 'Enter') { productSearchTerm = document.getElementById('productSearch').value.trim(); filterAndRenderProducts(); } });
 
-        /* ---------- MODAL LOGIC (Attributes & Reviews) ---------- */
-        async function openDetailModal(productId) {
-            const product = allProducts.find(p => p.id == productId); // Find product
-            if (!product) return;
-            document.getElementById('detailProductName').innerText = `Manage: ${product.name}`; // Set modal title
+    // ---------- ORDERS ----------
+    async function loadOrders() {
+        const res = await fetch(`${API}/api/orders`);
+        allOrders = await res.json();
+        filterAndRenderOrders();
+    }
 
-            // Fetch attributes and reviews
-            const attrRes = await fetch(`${API}/api/attributes/${productId}`);
-            let attributes = await attrRes.json();
-            const revRes = await fetch(`${API}/api/reviews/${productId}`);
-            let reviews = await revRes.json();
+    function filterAndRenderOrders() {
+        let filtered = [...allOrders];
+        if (orderSearchTerm) {
+            const term = orderSearchTerm.toLowerCase();
+            filtered = filtered.filter(o =>
+                o.customer_name.toLowerCase().includes(term) ||
+                (o.customer_email && o.customer_email.toLowerCase().includes(term)) ||
+                (o.items_summary && o.items_summary.toLowerCase().includes(term))
+            );
+        }
+        filtered.sort((a, b) => new Date(a.order_date) - new Date(b.order_date));
+        const display = orderCurrentLimit === 999999 ? filtered : filtered.slice(0, orderCurrentLimit);
+        renderOrdersTable(display, filtered.length);
+    }
 
-            const EXCLUDED = ['_id', 'product_id', 'updated_at']; // MongoDB internal fields to exclude
-            let attrKeys = Object.keys(attributes).filter(k => !EXCLUDED.includes(k));
-            if (!currentAttributeOrder.length) currentAttributeOrder = [...attrKeys];
-
-            // Build attributes table HTML
-            let attrHtml = `<h4 style="margin-bottom:0.5rem;">Custom Attributes</h4>`;
-            if (attrKeys.length === 0) {
-                attrHtml += `<div class="empty-state">No attributes yet. Add one below.</div>`;
+    function renderOrdersTable(ordersToShow, totalCount) {
+        const container = document.getElementById('ordersList');
+        if (!ordersToShow.length) {
+            container.innerHTML = '<div class="empty-state">No orders found</div>';
+            document.getElementById('orderResultsInfo').innerHTML = '';
+            return;
+        }
+        let html = `<table class="data-table">
+            <thead><tr>
+                <th>Order ID</th><th>Customer</th><th>Items</th>
+                <th>Total</th><th>Order Date</th><th>Delivery Date</th>
+            </tr></thead><tbody>`;
+        ordersToShow.forEach(o => {
+            let itemsList = '';
+            if (o.items && o.items.length) {
+                itemsList = o.items.map(i => `${escapeHtml(i.product_name)} &times;${i.quantity}`).join('<br>');
             } else {
-                attrHtml += `<table class="attr-table" id="attrTable">
-                    <thead>
-                        <tr>
-                            <th style="width: 30px"></th>
-                            <th>Attribute</th>
-                            <th>Value</th>
-                            <th style="width: 80px">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="attrTableBody">`;
-                currentAttributeOrder.forEach(key => {
-                    if (!attributes[key]) return;
-                    attrHtml += `<tr data-key="${escapeHtml(key)}">
-                        <td style="text-align: center; cursor: grab;"><span class="drag-handle">::</span></td> <!-- Drag handle -->
-                        <td><strong>${escapeHtml(key)}</strong></td> <!-- Attribute key -->
-                        <td>${escapeHtml(attributes[key])}</td> <!-- Attribute value -->
-                        <td><button class="btn btn-danger btn-sm delete-attr" data-key="${escapeHtml(key)}">Delete</button></td> <!-- Delete button -->
-                    </tr>`;
-                });
-                attrHtml += `</tbody>
-                </table>
-                <div class="sorting-controls">
-                    <button id="moveUpBtn" class="btn btn-outline btn-sm">Move Up</button> <!-- Move up button -->
-                    <button id="moveDownBtn" class="btn btn-outline btn-sm">Move Down</button> <!-- Move down button -->
-                    <span style="font-size:0.7rem; color:var(--text-muted); margin-left:auto;">Click a row to select, then use Move Up/Down</span> <!-- Helper text -->
+                itemsList = o.items_summary || '—';
+            }
+            html += `<tr>
+                <td><span class="badge">#${o.id}</span></td>
+                <td><strong>${escapeHtml(o.customer_name)}</strong><br><span style="font-size:12px;color:var(--muted)">${escapeHtml(o.customer_email || '')}</span></td>
+                <td>${itemsList}</td>
+                <td><strong>$${parseFloat(o.total_amount).toFixed(2)}</strong></td>
+                <td>${new Date(o.order_date).toLocaleDateString()}</td>
+                <td>${new Date(o.delivery_date).toLocaleDateString()}</td>
+            </tr>`;
+        });
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+        document.getElementById('orderResultsInfo').innerHTML = `Showing ${ordersToShow.length} of ${totalCount} orders`;
+    }
+
+    document.getElementById('searchOrdersBtn').onclick = () => { orderSearchTerm = document.getElementById('orderSearch').value.trim(); filterAndRenderOrders(); };
+    document.getElementById('resetOrdersBtn').onclick = () => { document.getElementById('orderSearch').value = ''; orderSearchTerm = ''; filterAndRenderOrders(); };
+    document.getElementById('orderLimit').onchange = (e) => { orderCurrentLimit = parseInt(e.target.value); filterAndRenderOrders(); };
+    document.getElementById('orderSearch').addEventListener('keypress', (e) => { if (e.key === 'Enter') { orderSearchTerm = document.getElementById('orderSearch').value.trim(); filterAndRenderOrders(); } });
+
+    // ---------- USERS ----------
+    async function loadUsers() {
+        const res = await fetch(`${API}/api/users`);
+        allUsers = await res.json();
+        filterAndRenderUsers();
+    }
+
+    function filterAndRenderUsers() {
+        let filtered = [...allUsers];
+        if (userSearchTerm) {
+            const term = userSearchTerm.toLowerCase();
+            filtered = filtered.filter(u => u.full_name.toLowerCase().includes(term) || u.email.toLowerCase().includes(term));
+        }
+        const display = userCurrentLimit === 999999 ? filtered : filtered.slice(0, userCurrentLimit);
+        renderUserList(display, filtered.length);
+    }
+
+    function renderUserList(usersToShow, totalCount) {
+        const container = document.getElementById('userList');
+        if (!usersToShow.length) {
+            container.innerHTML = '<div class="empty-state">No users found</div>';
+            document.getElementById('userResultsInfo').innerHTML = '';
+            return;
+        }
+        container.innerHTML = '';
+        usersToShow.forEach(u => {
+            const div = document.createElement('div');
+            div.className = 'user-item';
+            div.innerHTML = `
+                <div style="flex:1;min-width:0">
+                    <div class="product-name">${escapeHtml(u.full_name)}</div>
+                    <div class="product-meta">
+                        <span class="meta-chip">${escapeHtml(u.email)}</span>
+                        ${u.birthdate ? `<span class="meta-chip">DOB: ${u.birthdate}</span>` : ''}
+                        ${u.address ? `<span class="meta-chip" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHtml(u.address)}</span>` : ''}
+                    </div>
+                </div>
+                <div class="user-actions">
+                    <button class="btn btn-primary btn-sm edit-user">Edit</button>
+                    <button class="btn btn-danger btn-sm delete-user">Delete</button>
                 </div>`;
-            }
-            // Add new attribute form
-            attrHtml += `<div style="margin-top: 0.75rem;">
-                <label>Add new attribute</label>
-                <div style="display:flex; gap:0.5rem; margin-top:0.25rem;">
-                    <input type="text" id="newAttrKey" placeholder="Attribute name" style="flex:1"> <!-- Key input -->
-                    <input type="text" id="newAttrVal" placeholder="Value" style="flex:1"> <!-- Value input -->
-                    <button id="addAttrBtn" class="btn btn-success btn-sm">Add</button> <!-- Add button -->
-                </div>
-            </div><hr>`;
+            div.querySelector('.edit-user').addEventListener('click', () => openEditUserModal(u));
+            div.querySelector('.delete-user').addEventListener('click', async () => {
+                if (confirm(`Delete user "${u.full_name}"? This will also delete their orders and cart.`)) {
+                    await fetch(`${API}/api/users/${u.id}`, { method: 'DELETE' });
+                    loadUsers();
+                }
+            });
+            container.appendChild(div);
+        });
+        document.getElementById('userResultsInfo').innerHTML = `Showing ${usersToShow.length} of ${totalCount} users`;
+    }
 
-            // Build reviews list HTML
-            let reviewsHtml = `<h4>Customer Reviews</h4>`;
-            if (reviews.length === 0) {
-                reviewsHtml += `<div class="empty-state">No reviews yet.</div>`;
-            } else {
-                reviews.forEach(r => {
-                    reviewsHtml += `<div class="review-item">
-                        <div><strong>${escapeHtml(r.user)}</strong> Rating: ${r.rating}/5</div> <!-- Reviewer name and rating -->
-                        <div style="margin:0.25rem 0">${escapeHtml(r.comment)}</div> <!-- Review text -->
-                        <div style="font-size:0.7rem;">${new Date(r.created_at).toLocaleString()}</div> <!-- Date -->
-                        <button class="btn btn-danger btn-sm delReview" data-id="${r._id}" style="margin-top:0.25rem;">Delete review</button> <!-- Delete button -->
-                    </div>`;
-                });
-            }
-            // Add new review form
-            reviewsHtml += `<div style="margin-top: 1rem;">
-                <label>Add customer review</label>
-                <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.5rem;">
-                    <input type="text" id="reviewName" placeholder="Customer name" style="flex:1"> <!-- Name -->
-                    <input type="number" id="reviewRating" placeholder="Rating 1-5" style="width:100px"> <!-- Rating -->
-                    <input type="text" id="reviewComment" placeholder="Comment" style="flex:2"> <!-- Comment -->
-                    <button id="addReviewBtn" class="btn btn-primary btn-sm">Add</button> <!-- Add button -->
-                </div>
+    function openEditUserModal(user) {
+        document.getElementById('editUserId').value = user.id;
+        document.getElementById('editFullName').value = user.full_name;
+        document.getElementById('editEmail').value = user.email;
+        document.getElementById('editBirthdate').value = user.birthdate || '';
+        document.getElementById('editAddress').value = user.address || '';
+        document.getElementById('editUserModal').style.display = 'flex';
+    }
+
+    async function saveUserEdit() {
+        const userId = document.getElementById('editUserId').value;
+        const full_name = document.getElementById('editFullName').value.trim();
+        const email = document.getElementById('editEmail').value.trim();
+        const birthdate = document.getElementById('editBirthdate').value.trim();
+        const address = document.getElementById('editAddress').value.trim();
+        if (!full_name || !email) { alert('Full name and email are required'); return; }
+        const res = await fetch(`${API}/api/users/${userId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ full_name, email, birthdate, address })
+        });
+        if (res.ok) { loadUsers(); document.getElementById('editUserModal').style.display = 'none'; alert('User updated successfully'); }
+        else { const err = await res.json(); alert('Error: ' + err.error); }
+    }
+
+    function closeEditUserModal() { document.getElementById('editUserModal').style.display = 'none'; }
+
+    document.getElementById('saveUserEditBtn').onclick = saveUserEdit;
+    document.getElementById('cancelUserEditBtn').onclick = closeEditUserModal;
+    document.getElementById('closeEditUserModal').onclick = closeEditUserModal;
+
+    document.getElementById('searchUsersBtn').onclick = () => { userSearchTerm = document.getElementById('userSearch').value.trim(); filterAndRenderUsers(); };
+    document.getElementById('resetUsersBtn').onclick = () => { document.getElementById('userSearch').value = ''; userSearchTerm = ''; filterAndRenderUsers(); };
+    document.getElementById('userLimit').onchange = (e) => { userCurrentLimit = parseInt(e.target.value); filterAndRenderUsers(); };
+    document.getElementById('userSearch').addEventListener('keypress', (e) => { if (e.key === 'Enter') { userSearchTerm = document.getElementById('userSearch').value.trim(); filterAndRenderUsers(); } });
+
+    // ---------- DETAIL MODAL (Attributes & Reviews) ----------
+    async function openDetailModal(productId) {
+        const product = allProducts.find(p => p.id == productId);
+        if (!product) return;
+        document.getElementById('detailProductName').innerText = product.name;
+        const attrRes = await fetch(`${API}/api/attributes/${productId}`);
+        let attributes = await attrRes.json();
+        const revRes = await fetch(`${API}/api/reviews/${productId}`);
+        let reviews = await revRes.json();
+
+        const EXCLUDED = ['_id', 'product_id', 'updated_at'];
+        let attrKeys = Object.keys(attributes).filter(k => !EXCLUDED.includes(k));
+        if (!currentAttributeOrder.length) currentAttributeOrder = [...attrKeys];
+
+        let attrHtml = `<div class="modal-section-label">Specifications</div>`;
+        if (attrKeys.length === 0) {
+            attrHtml += `<div class="empty-state" style="padding:20px">No attributes yet. Add one below.</div>`;
+        } else {
+            attrHtml += `<table class="attr-table" id="attrTable">
+                <thead><tr>
+                    <th style="width:28px"></th>
+                    <th>Attribute</th>
+                    <th>Value</th>
+                    <th style="width:80px">Action</th>
+                </tr></thead>
+                <tbody id="attrTableBody">`;
+            currentAttributeOrder.forEach(key => {
+                if (!attributes[key]) return;
+                attrHtml += `<tr data-key="${escapeHtml(key)}">
+                    <td style="text-align:center"><span class="drag-handle">&#8942;&#8942;</span></td>
+                    <td><strong>${escapeHtml(key)}</strong></td>
+                    <td>${escapeHtml(attributes[key])}</td>
+                    <td><button class="btn btn-danger btn-sm delete-attr" data-key="${escapeHtml(key)}">Delete</button></td>
+                </tr>`;
+            });
+            attrHtml += `</tbody></table>
+            <div class="sorting-controls">
+                <button id="moveUpBtn" class="btn btn-outline btn-sm">Move Up</button>
+                <button id="moveDownBtn" class="btn btn-outline btn-sm">Move Down</button>
+                <span>Click a row to select, then use Move Up / Move Down</span>
+            </div>`;
+        }
+        attrHtml += `<p style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Add Attribute</p>
+            <div class="inline-form-row">
+                <input type="text" id="newAttrKey" placeholder="Attribute name">
+                <input type="text" id="newAttrVal" placeholder="Value">
+                <button id="addAttrBtn" class="btn btn-success btn-sm">Add</button>
+            </div>
+            <hr>`;
+
+        let reviewsHtml = `<div class="modal-section-label">Customer Reviews</div>`;
+        if (reviews.length === 0) {
+            reviewsHtml += `<div class="empty-state" style="padding:20px">No reviews yet.</div>`;
+        } else {
+            reviews.forEach(r => {
+                reviewsHtml += `<div class="review-item">
+                    <div class="r-top">
+                        <span class="r-author">${escapeHtml(r.user)}</span>
+                        <span class="r-rating">${r.rating}/5</span>
+                    </div>
+                    <div class="r-text">${escapeHtml(r.comment)}</div>
+                    <div class="r-date">${new Date(r.created_at).toLocaleString()}</div>
+                    <button class="btn btn-danger btn-sm delReview" data-id="${r._id}" style="margin-top:8px">Delete</button>
+                </div>`;
+            });
+        }
+        reviewsHtml += `<p style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:16px 0 8px">Add Review</p>
+            <div class="inline-form-row">
+                <input type="text" id="reviewName" placeholder="Customer name" style="flex:2">
+                <input type="number" id="reviewRating" placeholder="Rating 1-5" style="flex:0 0 110px">
+                <input type="text" id="reviewComment" placeholder="Comment" style="flex:3">
+                <button id="addReviewBtn" class="btn btn-primary btn-sm">Add</button>
             </div>`;
 
-            document.getElementById('detailContent').innerHTML = attrHtml + reviewsHtml; // Insert into modal
+        document.getElementById('detailContent').innerHTML = attrHtml + reviewsHtml;
 
-            // --- Attribute handlers ---
-            document.getElementById('addAttrBtn').onclick = async () => {
-                const key = document.getElementById('newAttrKey').value.trim();
-                const val = document.getElementById('newAttrVal').value.trim();
-                if (!key || !val) return alert('Both fields required');
-                await fetch(`${API}/api/attributes`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ product_id: productId, attributes: { [key]: val } })
-                });
-                currentAttributeOrder = []; // Reset order cache
-                openDetailModal(productId); // Refresh modal
-                loadProducts(); // Refresh product list
+        document.getElementById('addAttrBtn').onclick = async () => {
+            const key = document.getElementById('newAttrKey').value.trim();
+            const val = document.getElementById('newAttrVal').value.trim();
+            if (!key || !val) return alert('Both fields required');
+            await fetch(`${API}/api/attributes`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ product_id: productId, attributes: { [key]: val } }) });
+            currentAttributeOrder = [];
+            openDetailModal(productId);
+            loadProducts();
+        };
+        document.querySelectorAll('.delete-attr').forEach(btn => {
+            btn.onclick = async () => {
+                const key = btn.getAttribute('data-key');
+                if (!confirm(`Delete attribute "${key}"?`)) return;
+                const cur = await fetch(`${API}/api/attributes/${productId}`);
+                let curAttrs = await cur.json();
+                delete curAttrs[key];
+                await fetch(`${API}/api/attributes`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ product_id: productId, attributes: curAttrs }) });
+                currentAttributeOrder = currentAttributeOrder.filter(k => k !== key);
+                openDetailModal(productId);
+                loadProducts();
             };
-            // Delete attribute handler
-            document.querySelectorAll('.delete-attr').forEach(btn => {
-                btn.onclick = async () => {
-                    const key = btn.getAttribute('data-key');
-                    if (!confirm(`Delete attribute "${key}"?`)) return;
-                    const cur = await fetch(`${API}/api/attributes/${productId}`);
-                    let curAttrs = await cur.json();
-                    delete curAttrs[key]; // Remove key
-                    await fetch(`${API}/api/attributes`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ product_id: productId, attributes: curAttrs })
-                    });
-                    currentAttributeOrder = currentAttributeOrder.filter(k => k !== key);
-                    openDetailModal(productId);
-                    loadProducts();
-                };
-            });
-            // Add review handler
-            document.getElementById('addReviewBtn').onclick = async () => {
-                const user = document.getElementById('reviewName').value.trim() || 'Anonymous';
-                const rating = parseInt(document.getElementById('reviewRating').value);
-                const comment = document.getElementById('reviewComment').value;
-                if (isNaN(rating) || rating < 1 || rating > 5) return alert('Rating must be 1-5');
-                await fetch(`${API}/api/reviews`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ product_id: productId, rating, comment, user })
-                });
+        });
+        document.getElementById('addReviewBtn').onclick = async () => {
+            const user = document.getElementById('reviewName').value.trim() || 'Anonymous';
+            const rating = parseInt(document.getElementById('reviewRating').value);
+            const comment = document.getElementById('reviewComment').value;
+            if (isNaN(rating) || rating < 1 || rating > 5) return alert('Rating must be 1-5');
+            await fetch(`${API}/api/reviews`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ product_id: productId, rating, comment, user }) });
+            openDetailModal(productId);
+        };
+        document.querySelectorAll('.delReview').forEach(btn => {
+            btn.onclick = async () => {
+                const revId = btn.getAttribute('data-id');
+                await fetch(`${API}/api/reviews/${revId}`, { method: 'DELETE' });
                 openDetailModal(productId);
             };
-            // Delete review handler
-            document.querySelectorAll('.delReview').forEach(btn => {
-                btn.onclick = async () => {
-                    const revId = btn.getAttribute('data-id');
-                    await fetch(`${API}/api/reviews/${revId}`, { method: 'DELETE' });
-                    openDetailModal(productId);
-                };
+        });
+
+        const tableBody = document.getElementById('attrTableBody');
+        let selectedRowIndex = -1;
+        if (tableBody) {
+            const rows = tableBody.querySelectorAll('tr');
+            rows.forEach((row, idx) => {
+                row.style.cursor = 'pointer';
+                row.onclick = () => { rows.forEach(r => r.classList.remove('selected-row')); row.classList.add('selected-row'); selectedRowIndex = idx; };
             });
-
-            // --- Attribute sorting (Move Up/Down) ---
-            const tableBody = document.getElementById('attrTableBody');
-            let selectedRowIndex = -1;
-            if (tableBody) {
-                const rows = tableBody.querySelectorAll('tr');
-                rows.forEach((row, idx) => {
-                    row.style.cursor = 'pointer';
-                    row.onclick = () => {
-                        rows.forEach(r => r.classList.remove('selected-row'));
-                        row.classList.add('selected-row'); // Highlight selected row
-                        selectedRowIndex = idx;
-                    };
-                });
-                const moveUp = document.getElementById('moveUpBtn');
-                const moveDown = document.getElementById('moveDownBtn');
-                if (moveUp) moveUp.onclick = () => {
-                    if (selectedRowIndex > 0) {
-                        // Swap positions in currentAttributeOrder array
-                        [currentAttributeOrder[selectedRowIndex], currentAttributeOrder[selectedRowIndex-1]] =
-                        [currentAttributeOrder[selectedRowIndex-1], currentAttributeOrder[selectedRowIndex]];
-                        openDetailModal(productId); // Refresh with new order
-                    } else {
-                        alert('Select an attribute first or it is already at the top');
-                    }
-                };
-                if (moveDown) moveDown.onclick = () => {
-                    if (selectedRowIndex < currentAttributeOrder.length-1 && selectedRowIndex >= 0) {
-                        [currentAttributeOrder[selectedRowIndex], currentAttributeOrder[selectedRowIndex+1]] =
-                        [currentAttributeOrder[selectedRowIndex+1], currentAttributeOrder[selectedRowIndex]];
-                        openDetailModal(productId);
-                    } else {
-                        alert('Select an attribute first or it is already at the bottom');
-                    }
-                };
-            }
-
-            document.getElementById('detailModal').style.display = 'flex'; // Show modal
+            const moveUp = document.getElementById('moveUpBtn');
+            const moveDown = document.getElementById('moveDownBtn');
+            if (moveUp) moveUp.onclick = () => {
+                if (selectedRowIndex > 0) { [currentAttributeOrder[selectedRowIndex], currentAttributeOrder[selectedRowIndex-1]] = [currentAttributeOrder[selectedRowIndex-1], currentAttributeOrder[selectedRowIndex]]; openDetailModal(productId); }
+                else alert('Select an attribute first or it is already at the top');
+            };
+            if (moveDown) moveDown.onclick = () => {
+                if (selectedRowIndex < currentAttributeOrder.length-1 && selectedRowIndex >= 0) { [currentAttributeOrder[selectedRowIndex], currentAttributeOrder[selectedRowIndex+1]] = [currentAttributeOrder[selectedRowIndex+1], currentAttributeOrder[selectedRowIndex]]; openDetailModal(productId); }
+                else alert('Select an attribute first or it is already at the bottom');
+            };
         }
+        document.getElementById('detailModal').style.display = 'flex';
+    }
 
-        // Close modal (× button or click outside)
-        document.querySelector('.modal-close').onclick = () => {
-            document.getElementById('detailModal').style.display = 'none';
-            currentAttributeOrder = []; // Reset attribute order
-        };
-        window.onclick = (e) => {
-            if (e.target === document.getElementById('detailModal')) {
-                document.getElementById('detailModal').style.display = 'none';
-                currentAttributeOrder = [];
-            }
-        };
+    document.querySelector('#detailModal .modal-close').onclick = () => { document.getElementById('detailModal').style.display = 'none'; currentAttributeOrder = []; };
+    window.onclick = (e) => {
+        if (e.target === document.getElementById('detailModal')) { document.getElementById('detailModal').style.display = 'none'; currentAttributeOrder = []; }
+        if (e.target === document.getElementById('editUserModal')) closeEditUserModal();
+    };
 
-        // Initial load: fetch products and orders
-        loadProducts();
-        loadOrders();
-    </script>
+    // Tab switching
+    const tabs = document.querySelectorAll('.tab-btn');
+    const contents = document.querySelectorAll('.tab-content');
+    tabs.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tabId = btn.getAttribute('data-tab');
+            tabs.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            contents.forEach(c => c.classList.remove('active'));
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+        });
+    });
+
+    loadProducts();
+    loadOrders();
+    loadUsers();
+</script>
 </body>
 </html>
